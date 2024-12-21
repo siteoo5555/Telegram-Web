@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Predict Gender By Name</title>
+    <link rel="icon" href="https://w7.pngwing.com/pngs/797/467/png-transparent-iphone-emoji-samsung-galaxy-guess-the-questions-crying-emoji-emoticon-logo-electronics-smiley-apple-color-emoji-thumbnail.png">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+<style>
+    * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-color: #7e5eff;
+}
+.container {
+  position: absolute;
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 31.25em;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  padding: 3em 2em;
+  border-radius: 0.5em;
+}
+.app-title {
+  font-weight: 100;
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+  position: relative;
+  margin: auto;
+  color: #020332;
+  letter-spacing: 0em;
+}
+.input-wrapper {
+  display: grid;
+  grid-template-columns: 9fr 3fr;
+  gap: 1em;
+  margin: 2.5em 0;
+}
+#name,
+#submit {
+  font-size: 1em;
+}
+#name {
+  padding: 0.8em 0.5em;
+  border: 1px solid #020332;
+  border-radius: 0.5em;
+}
+#submit {
+  background-color: #7e5eff;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5em;
+}
+.female {
+  background-color: #ff5f96;
+}
+.male {
+  background-color: #5a72e9;
+}
+#info {
+  padding: 2em 1em;
+  text-align: center;
+  border-radius: 0.9em;
+}
+#result-name {
+  text-transform: capitalize;
+  font-weight: 500;
+  color: #edecec;
+}
+#gender-icon {
+  display: block;
+  width: 5em;
+  position: relative;
+  margin: 2em auto 1em auto;
+}
+#gender {
+  color: #ffffff;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+#prob {
+  letter-spacing: 0.2em;
+  font-weight: 500;
+  color: #edecec;
+}
+</style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="app-title">Predict Gender By Name</h1>
+      <div class="input-wrapper">
+        <input
+          type="text"
+          value="MuhammadZabihulloh"
+          id="name"
+          placeholder="Enter a name.."
+        />
+        <button id="submit" title="Predict">Predict</button>
+      </div>
+      <div id="result">
+        <div id="wrapper"></div>
+        <div id="error"></div>
+      </div>
+    </div>
+<script>
+    let url = "https://api.genderize.io?name=";
+let wrapper = document.getElementById("wrapper");
+let predictGender = () => {
+  let name = document.getElementById("name").value;
+  let error = document.getElementById("error");
+  let finalURL = url + name;
+  console.log(name);
+  console.log(finalURL);
+  wrapper.innerHTML = "";
+  error.innerHTML = "";
+  //Check if input field is not empty and the entered name does not contain anything but alphabets.
+  if (name.length > 0 && /^[A-Za-z]+$/.test(name)) {
+    fetch(finalURL)
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data);
+        let div = document.createElement("div");
+        div.setAttribute("id", "info");
+        div.innerHTML = `<h2 id="result-name">${data.name}</h2><img src="" id="gender-icon"/> <h1 id="gender">${data.gender}</h1><h4 id="prob">Probability: ${data.probability}</h4>`;
+        wrapper.append(div);
+        if (data.gender == "female") {
+          div.classList.add("female");
+          document
+        } else {
+          div.classList.add("male");
+          document
+        }
+      });
+    document.getElementById("name").value = "";
+  } else {
+    error.innerHTML = "Enter a valid name with no spaces";
+  }
+};
+
+document.getElementById("submit").addEventListener("click", predictGender);
+window.addEventListener("load", predictGender);
+</script>
+  </body>
+</html>

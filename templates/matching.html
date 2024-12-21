@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Matching Game</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/11725/11725722.png">
+    <meta name="description" content="">
+    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+<style>
+    html {
+    box-sizing: border-box;
+}
+button {
+    all: unset;
+    cursor: pointer;
+  }
+
+  @media (display-mode: fullscreen) {
+    body {
+      background-color: #f9bb86;
+      font-size: 1.2em;
+    }
+  }
+
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    font-family: 'Coda', cursive;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+.deck {
+    width: 660px;
+    min-height: 680px;
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 3em;
+}
+
+.deck .card {
+    height: 125px;
+    width: 125px;
+    background: linear-gradient(160deg, #3C384D 0%, #ffffff 450%);
+    font-size: 0;
+    color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    animation: flash-light-gry 0.3s;
+
+}
+
+.deck .card.open {
+    background: #02b3e4;
+    cursor: default;
+    animation: flash-grn 0.3s;
+}
+
+.deck .card.show {
+    font-size: 33px;
+}
+
+.deck .card.match {
+    cursor: default;
+    background: #02ccba;
+    font-size: 33px;
+    animation: flash-pnk 0.5s;
+}
+.score-panel {
+
+    text-align: center;
+    width: 660px;
+    padding-left: 32px;
+    padding-right: 32px;
+    margin-bottom: 10px;
+}
+
+.score-panel .stars {
+    float: left;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.score-panel .stars li {
+    list-style: none;
+    display: inline-block;
+}
+
+.moves {
+    padding-left: 5px;
+    float: left;
+}
+
+.score-panel .restart {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.time-container {
+    width: 85px;
+    float: right;
+    display: inline-block;
+}
+
+#time-counter {
+    float: left;
+}
+
+.blink-1 {
+    animation: blink 1.9s;
+}
+
+.blink-2 {
+    animation: blink 0.6s;
+}
+
+.blink-3 {
+    background: red;
+    box-shadow: 0 0 10px 3px red;
+
+}
+
+/* 
+Animations
+ */
+ 
+@keyframes flash-light-gry {
+    0% {
+        background-color: #e36153;
+        transform: matrix(-0.866, -0.5, 0.5, 0.866, 0, 0);
+    }
+    100% {
+        background: #e36153;
+        transform: translate(0,0);
+    }
+}
+
+@keyframes flash-grn {
+    0% {
+        background-color: #3c384d;
+    }
+    100% {
+        background-color: #02ccba;
+        transform: rotateX(360deg);
+    }
+}
+
+@keyframes flash-pnk {
+    0% {
+        background-color: #00Bfff;
+    }
+    100% {
+        background-color: #ff00Bf ;
+        transform: rotateY(360deg);
+    }
+}
+
+@keyframes blink {
+    0% {
+        background: red;
+        box-shadow: 0 0 10px 3px red;
+    }
+    100% {
+        background-color: #FFF;
+    }
+}
+</style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Matching Game</h1>
+        </header>
+        <section class="score-panel">
+        	<ul class="stars">
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+        	</ul>
+        	<span class="moves">0 Moves</span>
+            <div class="restart">
+        		<i class="fa fa-repeat"></i>
+        	</div>
+            <div class="time-container">
+                <div id="time-counter">00 : 00 : 00</div>
+            </div>
+        </section>
+        <ul class="deck">
+        </ul>
+    </div>
+    <center>
+    <button onclick="toggleFullscreen()"  title="Full Screen">
+        <svg width="30" height="30">
+          <path
+            id="enter-fullscreen"
+            stroke="black"
+            stroke-width="3"
+            fill="none"
+            d="
+               M 10, 2 L 2,2 L 2, 10
+               M 20, 2 L 28,2 L 28, 10
+               M 28, 20 L 28,28 L 20, 28
+               M 10, 28 L 2,28 L 2, 20"
+            />
+          <path
+            id="exit-fullscreen"
+            stroke="transparent"
+            stroke-width="3"
+            fill="none"
+            d="
+               M 10, 2 L 10,10 L 2, 10
+               M 20, 2 L 20,10 L 28, 10
+               M 28, 20 L 20,20 L 20, 28
+               M 10, 28 L 10,20 L 2, 20"
+            />
+        </svg>
+      </button>
+    </center>
+<script>
+const deck = document.querySelector('.deck'),
+	everyCard = document.getElementsByClassName('card'),
+	starNum = document.querySelector('.stars'),
+	moveNum = document.querySelector('.moves');
+
+let timeCounter = document.getElementById('time-counter'),
+    s = 0, m = 0, h = 0;
+	move = 0,
+	open = [], // array list for the cards that are turned (`.open`)
+	match = [], // array list for the pairs of cards that have the same symbol (`.match`)
+	everyStar = document.getElementsByClassName('fa-star'),
+	b = "";
+
+	arrays = [
+		"fa-diamond",
+		"fa-diamond",
+		"fa-paper-plane-o",
+		"fa-paper-plane-o",
+		"fa-anchor",
+		"fa-anchor",
+		"fa-bolt",
+		"fa-bolt",
+		"fa-cube",
+		"fa-cube",
+		"fa-leaf",
+		"fa-leaf",
+		"fa-bicycle",
+		"fa-bicycle",
+		"fa-bomb",
+		"fa-bomb"
+	];
+
+/*
+Shuffle function from http://stackoverflow.com/a/2450976
+Fisher-Yates Algoritm (Udacity's FEND version)
+*/
+function shuffle() {
+	let currentIndex = arrays.length, temporaryValue, randomIndex;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = arrays[currentIndex];
+        arrays[currentIndex] = arrays[randomIndex];
+        arrays[randomIndex] = temporaryValue;
+    }
+    return arrays;
+}
+
+// Creates a shuffled deck (`.deck`)
+const generate = function () {
+	let shuffledArrays = shuffle(arrays);
+	let fragment = document.createDocumentFragment();
+	arrays.forEach(function createCard(array) {
+		let li = document.createElement('li');
+		li.classList = "card";
+		li.innerHTML = `<i class="fa ${array}"><i/>`;
+		fragment.appendChild(li);
+	});
+	deck.appendChild(fragment);
+}
+
+// Logic for timer, located on top-right corner
+let timer = function myTimer() {
+    s++;
+    if (s >= 60) {
+        s = 0;
+        m++;
+        if (m >= 60) {
+            m = 0;
+            h++;
+        }
+    }
+  
+    timeCounter.textContent = `${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`;
+// set to run on 1sec intervals, each time the function iterates over itself, until the game is through
+    setTimeout(myTimer, 1000);
+}
+
+// display the number of moves on the move counter (.moves)
+const moveCounter = function () {
+	move++;
+	moveNum.innerHTML = move <= 1 ? move + " Move" : move + " Moves";
+}
+
+// If move >= 13, removes 1 star; >= 17, removes another; >= 21, another
+const starCounter = function () {
+	if (move === 14) {
+		starNum.firstElementChild.outerHTML = "";			
+	}
+	if (move === 19) {
+		starNum.firstElementChild.outerHTML = "";		
+	}
+	if (move === 24) {
+		starNum.innerHTML = "<li><i><small>No star for you...</small></i></li>";
+	}
+}
+
+let blinking = function () {
+	if (move >= 14 && move < 19){
+		b = starNum.classList.toggle('blink-1');
+    b++;
+    return b;
+	}
+}
+
+let blinking2 = function () {
+	if (move >= 19 && move < 24){
+		starNum.classList.remove('blink-1');
+		b = starNum.classList.toggle('blink-2');
+	    b++;
+    	return b;
+	}
+	if (move === 24){
+		starNum.classList.remove('blink-3');
+		b = starNum.classList.toggle('blink-3');
+	    b++;
+	    return b;
+	}
+}
+
+// display victory message after the 16 cards are matched, with a wait of 800 milliseconds
+const victory = function () {
+	if (document.getElementsByClassName('match').length === 16) {
+		let gameEnd = Date.now();
+		//function totalGameTime () {
+		let gameTime = gameEnd - gameStart;		
+		//totalGameTime();
+		let gameTimeTemp = gameTime /1000;
+		gameTimeTemp >= 60 ? totalTime = (gameTimeTemp / 60).toFixed(2) + " minutes" : totalTime = gameTimeTemp.toFixed(0) + " seconds"; 
+	
+		setTimeout(function() {
+			window.alert("Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + "!\n\nPlay again?");
+		}, 800);
+
+		// if 16 cards are matching - which means the game is over - restarts game automatically, after waiting 2 seconds
+		setTimeout(function() {
+			restart();
+		}, 2000);
+	};
+}
+
+//Restart Button's function
+const restart = function () {
+	
+	//erases previouslly generated deck's ul (`.deck`), star counter (`.stars`) and moves counter(`.moves`)
+	s = 0;
+	m = 0;
+	h = 0;
+	move = 0;
+	deck.innerHTML = "";
+	starNum.innerHTML = '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>';
+	moveNum.innerHTML = "0 Moves";
+
+	//erases previouslly generated array list for open cards (`.open`) and for matching card pairs (`.match`)
+	open.splice(0, open.length);
+	match.splice(0, match.length);
+	starNum.classList.remove('blink-1', 'blink-2', 'blink-3');
+		
+	//generate new shuffled array and restarts game
+	generate();
+	game();
+}
+
+const game = function() {
+	for (let i = 0; i < everyCard.length; i++) {
+		everyCard.item(i).addEventListener('click', function () {
+
+			// Prevents matching the same card upon double click: checks if the open array item of index `i`, to be added in this iteration, holds the same symbol as the one provided in the previous iteration (`i - 1`). If it doesn't, then the code proceds to check if a pair of clicked cards matches the same symbol.
+			if (!open.includes(everyCard.item(i))) {
+
+				// Reveals each card on click, adding them to the `open` array list
+				open.splice(0, 0, everyCard.item(i));
+				open[0].classList.add("open", "show");
+
+				if (open.length === 2) {
+					
+					// updates move counters each time a pair of cards is turned
+					moveCounter();
+					starCounter();
+					/*moveCounter();*/
+
+					// checks if pair of cards have the same symbol and, if they do, adds them to the `match` array list
+					if ((open[0].firstChild.outerHTML === open[1].firstChild.outerHTML)) {
+						match = open.slice();
+						match[0].classList.add("match");
+						match[1].classList.add("match");
+						open[0].classList.remove("open", "show");
+						open[1].classList.remove("open", "show");
+						match[0].classList.remove("open", "show");
+						match[1].classList.remove("open", "show");
+						open.splice(0, 2);
+
+						// if 16 cards are matching its symbols, displays victory alert box
+						victory();
+					}
+
+/*
+				When a pair of cards is turned up, but their symbols are not the same, the cards are held up until the window is clicked again.	
+				Also, if a single card is turned up at this point, it is turned down too, so the `game()` function iterates over and turns another card up, to see if it forms a pair of cards with the same symbol
+*/
+				window.addEventListener('click', function () {
+					if (open.length > 2) {
+						open[0].classList.remove("open", "show");
+						open[1].classList.remove("open", "show");
+						open[2].classList.remove("open", "show");
+						open.splice(0, 3);
+				}});
+				}
+			}
+		});
+	}
+}
+
+// stores the time the game started
+let gameStart = Date.now();
+
+// calls function to create deck of shuffled cards
+generate();
+
+// runs timer function after 1 second
+setTimeout(timer, 1000);
+
+// if 2 or 1 stars, blinks red, if 0, stays red
+setInterval (blinking, 1900);
+
+setInterval (blinking2, 600);
+
+// starts the game's logic
+game();
+
+// makes the restart button work when clicked (`.restart`)
+document.querySelector('.restart').addEventListener('click', restart);
+</script>
+<script>
+    const enterFullscreen = document.getElementById("enter-fullscreen");
+const exitFullscreen = document.getElementById("exit-fullscreen");
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+    enterFullscreen.setAttribute("stroke", "transparent");
+    exitFullscreen.setAttribute("stroke", "black");
+  } else {
+    document.exitFullscreen();
+    enterFullscreen.setAttribute("stroke", "black");
+    exitFullscreen.setAttribute("stroke", "transparent");
+  }
+}
+</script>
+</body>
+</html>

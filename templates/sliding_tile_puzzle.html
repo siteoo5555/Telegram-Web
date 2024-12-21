@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Game</title>
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/1/1a/2048_Icon.png">
+    <style>
+   * {
+    padding: 0;
+    margin: 0;
+}
+html {
+  font-size: 10px;
+}
+
+#me {
+    all: unset;
+    cursor: pointer;
+  }
+
+  @media (display-mode: fullscreen) {
+    body {
+      background-color: red;
+      font-size: 1.2em;
+    }
+  }
+
+
+body{
+    background-color:#f9ead1;
+}
+#head {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+#intro p {
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+#container {
+  position:relative;
+  background-color: #faf8ef;
+  width: 450px;
+  margin: 0 auto;
+  padding: 5px 50px;
+}
+h1 {
+  display: inline;
+  color: #776e65;
+  font-size: 7rem;
+  line-height: 8rem;
+  letter-spacing: 2px;
+}
+p {
+  color: #776e65;
+  font-size: 1.4em;
+}
+#scoreBar {
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  justify-content: space-around;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+}
+#score,
+#best {
+  position: relative;
+  display: inline-block;
+  font-size: 2rem;
+  background-color: #bbada0;
+  height: 50px;
+  margin: 0 3px;
+  border-radius: 3px;
+  line-height: 7rem;
+  padding: 0 20px;
+  font-weight: bold;
+  color: #fff;
+}
+#score::after {
+  content: "SCORE";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #eee4da;
+  line-height: 3rem;
+  font-size: 0.5rem;
+  font-weight: bold;
+}
+#best::after {
+  content: "BEST";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #eee4da;
+  font-weight: bold;
+  line-height: 3rem;
+  font-size: 0.5rem;
+}
+
+button {
+  box-sizing: content-box;
+  background-color: #8f7a66;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  width: 100px;
+  height: 30px;
+  padding: 5px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+  line-height: 30px;
+}
+button:hover {
+  cursor: pointer;
+}
+#restart {
+  display: inline-block;
+}
+#intro {
+  display: flex;
+  justify-content: space-between;
+}
+
+#game {
+  position:relative;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 10px;
+  column-gap: 10px;
+  width: 450px;
+  height: 450px;
+  box-sizing: border-box;
+  background-color: #bbada0;
+  border-radius: 5px;
+  margin: 20px 0;
+  overflow: hidden;
+  padding: 10px;
+  color: #fff;
+}
+
+.item {
+  background-color: #cdc1b4;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 100px;
+  font-size: 4.8rem;
+  font-weight: bold;
+}
+.item:not(.item[data-value = '0']){
+  border:1px solid background-color;
+  z-index:2;
+}
+.item[data-value ='mid'] {
+  font-size: 3.5rem;
+  background-color:#444;
+}
+.item[data-value ='big'] {
+  font-size: 2.8rem;
+  background-color:#444;
+}
+.item[data-value ='more-big'] {
+  font-size: 2.2rem;
+  background-color:#444;
+}
+.item[data-value="2"] {
+  content:'2';
+  background-color: #eee4da;
+  color: #776e65;
+}
+.item[data-value="4"] {
+  background-color: #ede0c8;
+  color: #776e65;
+}
+.item[data-value="8"] {
+  background-color: #f2b179;
+}
+.item[data-value="16"] {
+  background-color: #f59663;
+}
+.item[data-value="32"] {
+  background-color: #f67c5f;
+}
+.item[data-value="64"] {
+  background-color: #f65e3b;
+}
+.item[data-value="128"] {
+  background-color: #edcf72;
+  font-size: 4rem;
+}
+.item[data-value="256"] {
+  background-color: #edcc61;
+  font-size: 4rem;
+}
+.item[data-value="512"] {
+  background-color: #edc850;
+  font-size: 4rem;
+}
+.item[data-value="1024"] {
+  background-color: #edc53f;
+  font-size: 3.5rem;
+}
+.item[data-value="2048"] {
+  background-color: #edc22e;
+  font-size: 3.5rem;
+}
+
+.moveTile{
+  width:100px;
+  height:100px;
+  color:#fff;
+  position:absolute;
+  transition:left 100ms ease-in,top 100ms ease-in,visibility 5ms linear 100ms; 
+}
+.mergeTile{
+  width:100px;
+  height:100px;
+  transform:scale(0);
+  position:absolute;
+  transition:transform 140ms cubic-bezier(0,.2,0,1.5),visibility 5ms linear 200ms; 
+  color: #fff;
+}
+.newTile{
+  width:100px;
+  height:100px;
+  transition:transform 200ms ease-in,visibility 5ms linear 250ms;
+  transform:scale(0);
+  position:absolute;
+  color: #fff;
+}
+
+.mask{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-color:white;
+  opacity:.4;
+  top:0;
+  left:0;
+  z-index:50;
+}
+
+.gameover{
+  width:100%;
+  height:100%;
+  font-size:5rem;
+  position:absolute;
+  z-index:100;
+  color:#776f65;
+  font-weight:bold;
+  text-align:center;
+  line-height:400px;
+}
+#again{
+  position:absolute;
+  left:0;
+  right:0;
+  color: white;
+  background: chocolate;
+  margin:0 auto;
+  top:280px;
+  z-index:100;
+  
+}
+.scoreAdd{
+  position:absolute;
+  color:black;
+  font-size:2rem;
+  opacity:.6;
+  font-weight:bold;
+  transition:all 1s ease-out;
+}
+
+#footer{
+  margin-bottom:20px;
+}
+#footer > p{
+  font-size:1.7rem;
+}
+
+.line{
+  height:1px;
+  width:80%;
+  margin:30px auto;
+  border-top:2px solid #cdc1b4;
+}
+
+.moveTile .hidden{
+  visibility:hidden !important;
+}
+.mergeTile .hidden{
+  transform:scale(1);
+  visibility:hidden;
+}
+
+    </style>
+</head>
+<body>
+<h6 style="color: #f9ead1;">........................</h6>
+    <div id='container'>
+        <div id='head'>
+          <h1>2048</h1>
+          <div id='scoreBar'>
+            <div id='score'>0</div>
+            <div id="best">0</div>
+          </div>
+        </div>
+        <div id="intro">
+          <div id='text'>
+            <p><strong>Play 2048 Game Online</strong></p>
+            <p>Join the numbers and get to the <strong>2048 tile!</strong></p>
+          </div>
+          <button id='restart' title="New Game">New Game</button>
+        </div>
+      
+        <div id='game'>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="mask" hidden></div>
+          <div class="gameover" hidden>Game over!</div>
+          <button id="again" hidden>Try again</button>
+        </div>
+        <div id='footer'>
+          <p><strong>HOW TO PLAY:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong>
+          </p>
+        </div>
+      </div><br>
+      <center>
+      <button id="me" onclick="toggleFullscreen()">
+        <svg width="30" height="30">
+          <path
+            id="enter-fullscreen"
+            stroke="black"
+            stroke-width="3"
+            fill="none"
+            d="
+               M 10, 2 L 2,2 L 2, 10
+               M 20, 2 L 28,2 L 28, 10
+               M 28, 20 L 28,28 L 20, 28
+               M 10, 28 L 2,28 L 2, 20"
+            />
+          <path
+            id="exit-fullscreen"
+            stroke="transparent"
+            stroke-width="3"
+            fill="none"
+            d="
+               M 10, 2 L 10,10 L 2, 10
+               M 20, 2 L 20,10 L 28, 10
+               M 28, 20 L 20,20 L 20, 28
+               M 10, 28 L 10,20 L 2, 20"
+            />
+        </svg>
+      </button>
+    </center>
+      <script>
+        const defaultTraversalX = [0, 1, 2, 3];
+const defaultTraversalY = [0, 1, 2, 3];
+let head = document.getElementById("head");
+let scoreBar = document.getElementById("scoreBar");
+let scoreItem = document.getElementById("score");
+let container = document.getElementById("container");
+let curGame = null;
+let mask = document.querySelectorAll(".mask,.gameover,#again");
+let game = document.getElementById("game");
+
+document.addEventListener("DOMContentLoaded", () => {
+  curGame = new Game();
+  curGame.init();
+});
+let btn = document.getElementById("restart");
+let againBtn = document.getElementById("again");
+btn.onclick = newGame;
+againBtn.onclick = newGame;
+function newGame() {
+  curGame.clear();
+  curGame = null;
+  curGame = new Game();
+  curGame.init();
+}
+
+class Game {
+  /* direction */
+  static dir = [
+    [-1, 0],
+    [0, 1],
+    [1, 0],
+    [0, -1]
+  ];
+  constructor() {
+    this.game = document.getElementById("game");
+    this.item = game.querySelectorAll(".item");
+    this.tile = new Array(4);
+    this.score = 0;
+  }
+
+  /**
+   * create new tile to the game board.
+   * create 2 tiles when initializing.
+   * new tile's value is 2 or 4.
+   * @param {Integer} the num of tile to create
+   */
+  createNewTile = (num = 1) => {
+    for (let i = 0; i < num; i++) {
+      let rand = Math.floor(Math.random() * 16);
+      let x = Math.floor(rand / 4);
+      let y = rand % 4;
+      while (this.tile[x][y]) {
+        rand = Math.floor(Math.random() * 16);
+        x = Math.floor(rand / 4);
+        y = rand % 4;
+      }
+      let value = (Math.floor(Math.random() * 2) + 1) * 2;
+      this.tile[x][y] = value;
+      this.addTile({ x: x, y: y, val: value }, 250, false, true);
+    }
+  };
+  /**
+   * @return {boolean} no empty space
+   */
+  isNoEmptySpace = () => {
+    for (let row of this.tile) {
+      for (let i of row) {
+        if (i == 0) return false;
+      }
+    }
+    return true;
+  };
+  /**
+   * if the board has no empty space,
+   * check if any tile can be merged.
+   * @return {boolean} some tiles can be merged.
+   */
+  canMove = () => {
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        if (
+          (j < 3 && this.tile[i][j] == this.tile[i][j + 1]) ||
+          (i < 3 && this.tile[i][j] == this.tile[i + 1][j])
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+  /**
+   * listen the event of key down,
+   * move the tile and merge,
+   * check if the game is over
+   * @param {Event} read the key pushed through event.key
+   */
+  onKeyDown(event) {
+    let dir = 0;
+    // prevent the default event of arrow key
+    // then the window will not scroll
+    event.preventDefault();
+
+    // read the direction
+    switch (event.key) {
+      case "ArrowUp":
+        dir = 0;
+        break;
+      case "ArrowRight":
+        dir = 1;
+        break;
+      case "ArrowDown":
+        dir = 2;
+        break;
+      case "ArrowLeft":
+        dir = 3;
+        break;
+      default:
+        return;
+    }
+
+    // the order to traversal the index
+    let traversal = {
+      x: [...defaultTraversalX],
+      y: [...defaultTraversalY]
+    };
+
+    clearAnimateItem();
+    // move the tile and merge
+    // return true if change happen
+
+    let promise = curGame.moveTile(dir, traversal);
+    // change happen and there has empty space
+    // then create a new tile
+    promise.then((moved) => {
+      if (moved && !curGame.isNoEmptySpace()) {
+        curGame.createNewTile();
+      }
+      // the game board is full and no tile can be merged
+      // game over.
+      if (curGame.isNoEmptySpace() && !curGame.canMove()) {
+        curGame.endGame();
+      }
+    });
+  }
+  /**
+   * initial the game.
+   */
+  init = () => {
+    let promise = new Promise((resolve) => {
+      for (let i = 0; i < 4; i++) {
+        this.tile[i] = new Array(4).fill(0);
+      }
+      resolve();
+    });
+    promise
+      .then(this.createNewTile(2))
+      .then(() => document.addEventListener("keydown", this.onKeyDown));
+  };
+  /**
+   * move the tile and merge the neighbor of same value in the direction.
+   * merge will happen only once on the same tile per move
+   * . 2 2 4 -> . . 4 4
+   * @param {Integer} the index of direction
+   * @param {Object}
+   *    x:the order of traversal in the row direction
+   *    y:the order of traversal in the column direction
+   * @return {boolean} whether change happen in this move
+   */
+  async moveTile(d, traversal) {
+    // this.forbiddenTile.clear();
+    let changed = false;
+    let score = 0;
+    if (Game.dir[d][0] == 1) traversal.x = traversal.x.reverse();
+    if (Game.dir[d][1] == 1) traversal.y = traversal.y.reverse();
+
+    // save the last item changed
+    // avoid a tile be merged twice
+    let lastChangedItem = null;
+
+    traversal.x.forEach((i) => {
+      traversal.y.forEach((j) => {
+        let val = this.tile[i][j];
+        if (val != 0) {
+          let cur = { x: i, y: j, val: val };
+          // find the farthest pos tile can move to
+          let finalPos = this.findFinalPos(d, cur);
+          let next = finalPos.next;
+          let newTile;
+          // merge with the next tile
+          if (
+            next.x >= 0 &&
+            next.x < 4 &&
+            next.y >= 0 &&
+            next.y < 4 &&
+            val == this.tile[next.x][next.y] &&
+            (!lastChangedItem ||
+              next.x != lastChangedItem.x ||
+              next.y != lastChangedItem.y)
+          ) {
+            score += val * 2;
+            newTile = { x: next.x, y: next.y, val: val * 2 };
+            lastChangedItem = { x: next.x, y: next.y };
+          } else {
+            newTile = { x: finalPos.x, y: finalPos.y, val: val };
+          }
+
+          if (!changed && (newTile.x != i || newTile.y != j)) {
+            changed = true;
+          }
+          // no change happen
+          if (newTile.x == i && newTile.y == j) return;
+          // update the array
+          this.tile[i][j] = 0;
+          this.tile[newTile.x][newTile.y] = newTile.val;
+          // move the tile
+          this.move(cur, newTile);
+        }
+      });
+    });
+    if (score) this.updateScore(score);
+    return changed;
+  }
+  /**
+   * find the final position the tile will move to.
+   * @param {Array} the order of traversal
+   * @param {Object} x,y
+   * @return {Object} include the final position and its next tile
+   */
+  findFinalPos = (d, cur) => {
+    let res = cur;
+    while (cur.x >= 0 && cur.x <= 3 && cur.y >= 0 && cur.y <= 3) {
+      res = cur;
+      cur = { x: cur.x + Game.dir[d][0], y: cur.y + Game.dir[d][1] };
+      if (
+        cur.x > 3 ||
+        cur.x < 0 ||
+        cur.y > 3 ||
+        cur.y < 0 ||
+        this.tile[cur.x][cur.y]
+      ) {
+        break;
+      }
+    }
+    return {
+      x: res.x,
+      y: res.y,
+      next: { x: cur.x, y: cur.y }
+    };
+  };
+
+  /**
+   * add tile to the game board with animation effect.
+   * @param {Object} new tile
+   * @param {Integet} delay to add the tile / animation time
+   * @param {Boolean} use animation of merging
+   * @param {Boolean} use animation of creating
+   */
+  addTile = (tile, delay, merged, created = false) => {
+    let { x, y, val } = tile;
+    let coord = getCoord(this.item[x * 4 + y]);
+    let newTile = null;
+    // animate
+    if (merged || created) {
+      newTile = document.createElement("div");
+      let className = merged ? "mergeTile" : "newTile";
+      newTile.classList.add(className);
+      newTile.classList.add("item");
+      newTile.dataset.value = val;
+      newTile.innerHTML = val;
+      newTile.style.left = coord.left + "px";
+      newTile.style.top = coord.top + "px";
+      container.append(newTile);
+
+      newTile.getBoundingClientRect();
+      newTile.style.transform = "scale(1)";
+      newTile.style.visibility = "hidden";
+    }
+    setTimeout(() => {
+      this.item[x * 4 + y].innerHTML = val;
+      this.item[x * 4 + y].dataset.value = val;
+    }, delay);
+  };
+  /**
+   * move the tile
+   * @param {Object} old tile
+   * @param {Object} new tile
+   */
+  move = (old, newTile) => {
+    let oldIndex = old.x * 4 + old.y;
+    let newIndex = newTile.x * 4 + newTile.y;
+    let merged = old.val != newTile.val;
+
+    let oldCoord = getCoord(this.item[oldIndex]);
+
+    let moveTile = document.createElement("div");
+    moveTile.classList.add("moveTile", "item");
+    moveTile.dataset.value = old.val;
+    moveTile.innerHTML = old.val;
+    moveTile.style.left = oldCoord.left + "px";
+    moveTile.style.top = oldCoord.top + "px";
+
+    container.append(moveTile);
+    this.item[oldIndex].innerHTML = "";
+    this.item[oldIndex].dataset.value = 0;
+
+    this.addTile(newTile, 100, merged);
+    let newCoord = getCoord(this.item[newIndex]);
+    moveTile.style.left = newCoord.left + "px";
+    moveTile.style.top = newCoord.top + "px";
+    moveTile.style.visibility = "hidden";
+    // moveTile.classList.add('hidden');
+  };
+  /**
+   * update the score
+   * @param {Integer} score to add
+   */
+  updateScore = (score) => {
+    this.score += score;
+    scoreItem.innerHTML = this.score;
+    let item = document.createElement("div");
+    item.className = "scoreAdd";
+    item.innerHTML = `+${score}`;
+    let coord = container.getBoundingClientRect();
+    item.style.top = 60 + "px";
+    item.style.right = 130 + "px";
+    container.append(item);
+    setTimeout(() => {
+      item.style.top = -100 + "px";
+      item.style.opacity = 0;
+    }, 0);
+    setTimeout(() => {
+      item.remove();
+    }, 2000);
+  };
+  /**
+   * game over.
+   */
+  endGame = () => {
+    document.removeEventListener("keydown", this.onKeyDown);
+    console.log("gameover");
+    mask.forEach((i) => {
+      i.hidden = false;
+    });
+  };
+  /**
+   * clear the game board.
+   */
+  clear = () => {
+    this.tile = null;
+    this.score = 0;
+    document.removeEventListener("keydown", this.onKeyDown);
+    for (let i of this.item) {
+      i.innerHTML = "";
+      i.dataset.value = 0;
+    }
+    clearAnimateItem();
+    mask.forEach((i) => {
+      i.hidden = true;
+    });
+  };
+}
+/**
+ * get bounding client rect relative to container.
+ */
+function getCoord(item) {
+  let containerCoord = container.getBoundingClientRect();
+  let coord = item.getBoundingClientRect();
+  return {
+    left: coord.left - containerCoord.left,
+    top: coord.top - containerCoord.top
+  };
+}
+/**
+ * clear the animation item.
+ */
+function clearAnimateItem() {
+  let temp = document.querySelectorAll(".newTile,.mergeTile,.moveTile");
+  temp.forEach((t) => t.remove());
+}
+
+      </script>
+      <script>
+        const enterFullscreen = document.getElementById("enter-fullscreen");
+const exitFullscreen = document.getElementById("exit-fullscreen");
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+    enterFullscreen.setAttribute("stroke", "transparent");
+    exitFullscreen.setAttribute("stroke", "green");
+  } else {
+    document.exitFullscreen();
+    enterFullscreen.setAttribute("stroke", "red");
+    exitFullscreen.setAttribute("stroke", "transparent");
+  }
+}
+      </script>
+</body>
+</html>

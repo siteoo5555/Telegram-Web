@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0Cl9p2oVSzYxMJwaF8U3AktSM3NtDQYF9Gw&s">
+    <style>
+        body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+  border-radius: 50px;
+  border-width: 50px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+  border-radius: 50px;
+  border-style: dashed;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+  text-align: center;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+  text-align: center;
+}
+
+.title {
+  color: orange;
+  background-position: 0ch;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.title:hover{
+  color: #000;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 50%;
+  border-radius: 50px;
+  text-align: center;
+  text-decoration: dashed;
+
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+.glitch-wrapper {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   background-color: #000000;
+}
+
+.glitch {
+   position: relative;
+   font-size: 50px;
+   font-weight: bold;
+   color: #FFFFFF;
+   letter-spacing: 3px;
+   z-index: 1;
+}
+
+.glitch:before,
+.glitch:after {
+   display: block;
+   content: attr(data-text);
+   position: absolute;
+   top: 0;
+   left: 0;
+   opacity: 0.8;
+}
+
+.glitch:before {
+   animation: glitch-it 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+   color: #00FFFF;
+   z-index: -1;
+}
+
+.glitch:after {
+   animation: glitch-it 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+   color: #FF00FF;
+   z-index: -2;
+}
+
+@keyframes glitch-it {
+   0% {
+      transform: translate(0);
+   }
+   20% {
+      transform: translate(-2px, 2px);
+   }
+   40% {
+      transform: translate(-2px, -2px);
+   }
+   60% {
+      transform: translate(2px, 2px);
+   }
+   80% {
+      transform: translate(2px, -2px);
+   }
+   to {
+      transform: translate(0);
+   }
+}
+    </style>
+</head>
+<body>
+    <!-- <div class="about-section"> -->
+        <!-- <h1>About Us Page</h1>
+
+        <p>✩░▒▓▆▅▃▂▁𝗜 𝗮𝗺 𝗠𝘂𝗵𝗮𝗺𝗺𝗮𝗱𝗭𝗮𝗯𝗶𝗵𝘂𝗹𝗹𝗼𝗵.𝗜 𝗮𝗺 𝗘𝗧𝗛𝗜𝗖𝗔𝗟 𝗛𝗔𝗖𝗞𝗘𝗥 𝗮𝗻𝗱 𝗜 𝗸𝗻𝗼𝘄 𝗜𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻 𝗧𝗲𝗰𝗵𝗻𝗼𝗹𝗼𝗴𝘆. 𝗜 𝗸𝗻𝗼𝘄 𝗕𝗮𝗰𝗸𝗲𝗻𝗱,𝗙𝗿𝗼𝗻𝘁𝗲𝗻𝗱 𝗮𝗻𝗱 𝗝𝗮𝘃𝗮𝘀𝗰𝗿𝗶𝗽𝘁.
+          
+          <p>𝗠𝘆 𝗦𝘁𝗿𝗲𝗻𝗴𝘁𝗵𝘀:  </p>
+
+        <p>  𝗕𝗮𝗰𝗸𝗲𝗻𝗱 𝗘𝘅𝗰𝗲𝗹𝗹𝗲𝗻𝗰𝗲: 𝗟𝗲𝘃𝗲𝗿𝗮𝗴𝗶𝗻𝗴 𝗿𝗼𝗯𝘂𝘀𝘁 𝗳𝗿𝗮𝗺𝗲𝘄𝗼𝗿𝗸𝘀 𝗮𝗻𝗱 𝘀𝗲𝗰𝘂𝗿𝗲 𝗰𝗼𝗱𝗶𝗻𝗴 𝗽𝗿𝗮𝗰𝘁𝗶𝗰𝗲𝘀 𝘁𝗼 𝗯𝘂𝗶𝗹𝗱 𝘀𝗰𝗮𝗹𝗮𝗯𝗹𝗲 𝗮𝗻𝗱 𝗲𝗳𝗳𝗶𝗰𝗶𝗲𝗻𝘁 𝘀𝗲𝗿𝘃𝗲𝗿-𝘀𝗶𝗱𝗲 𝘀𝗼𝗹𝘂𝘁𝗶𝗼𝗻𝘀. </p>
+          
+         <p> 𝗙𝗿𝗼𝗻𝘁𝗲𝗻𝗱 𝗖𝗿𝗲𝗮𝘁𝗶𝘃𝗶𝘁𝘆: 𝗗𝗲𝗹𝗶𝘃𝗲𝗿𝗶𝗻𝗴 𝘂𝘀𝗲𝗿-𝗳𝗿𝗶𝗲𝗻𝗱𝗹𝘆 𝗮𝗻𝗱 𝘃𝗶𝘀𝘂𝗮𝗹𝗹𝘆 𝗮𝗽𝗽𝗲𝗮𝗹𝗶𝗻𝗴 𝗶𝗻𝘁𝗲𝗿𝗳𝗮𝗰𝗲𝘀 𝘁𝗮𝗶𝗹𝗼𝗿𝗲𝗱 𝘁𝗼 𝗰𝗹𝗶𝗲𝗻𝘁 𝗻𝗲𝗲𝗱𝘀.▁▂▃▅▆▓▒░✩ </div>
+        </p> -->
+        
+      <br>  <div class="glitch-wrapper">
+          <div class="glitch" data-text="𝖮𝖴𝖱 𝖳𝖤𝖠𝖬">𝖮𝖴𝖱 𝖳𝖤𝖠𝖬</div>
+       </div><br><br>
+      <div class="row">
+        <div class="column">
+          <div class="card">
+            <img  src="https://images.pexels.com/photos/1839564/pexels-photo-1839564.jpeg?cs=srgb&dl=pexels-ashutoshsonwani-1839564.jpg&fm=jpg" alt="Jane" style="width: 410px;height: 550px;border-radius: 50px;">
+            <div class="container">
+              <h2 style="font-size: 24.9px;text-align: center;">Muhammad Zabihulloh</h2>
+              <b><p class="title">BEST HACKER</p></b>
+              <p>ＥＴＨＩＣＡＬ ＨＡＣＫＥＲ😎</p>
+              <p>hacker@example.com</p>
+              <a href="https://t.me/Sigma_Boy_No1" target="_blank"><p><b><button class="button">ＣＯＮＴＡＣＴ</button></b></p></a>
+            </div>
+          </div>
+        </div>
+      
+        <div class="column">
+          <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_LmDktpJGQSsjUvTo4qijNyOFdjBfi40_kQ&s" alt="Mike" style="width: 410px;height: 550px;border-radius: 50px;">
+            <div class="container">
+              <h2>Mike Ross</h2>
+              <b><p class="title">Art Director</p></b>
+              <p>Ｍａｎａｇｅｓ Ａｒｔ Ｍｕｓｅｕｍｓ🎨🖌️</p>
+              <p>mike@example.com</p>
+             <a href="https://www.mikerossart.com/" target="_blank"><p><b><button class="button">ＣＯＮＴＡＣＴ</button></b></p></a>
+            </div>
+          </div>
+        </div>
+      
+        <div class="column">
+          <div class="card">
+            <img src="https://img.freepik.com/premium-vector/business-card-company-called-john-graphic-designer_856801-113.jpg" alt="John" style="width: 410px;height: 550px;border-radius: 50px;">
+            <div class="container">
+              <h2>John Doe</h2>
+              <b><p class="title">Designer</p></b>
+              <p>ＢＥＳＴ ＧＲＡＰＨＩＣ ＤＥＳＩＧＮＥＲ✏️📐</p>
+              <p>john@example.com</p>
+              <a href="https://dribbble.com/tags/john-doe" target="_blank"><p><b><button class="button">ＣＯＮＴＡＣＴ</button></b></p></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</body>
+</html>

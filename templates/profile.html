@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="shortcut icon" href="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg">
+</head>
+<body>
+    <center>
+    <h1>Create Profile</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="button" title="save">save</button>
+    </form>
+</center>
+<style>
+    body{
+        color: rgb(37, 37, 238);
+    }
+    *{
+        background-color: rgb(174, 246, 68);
+    }
+    .button{
+        font-size: 1.2em;
+        color: white;
+        background-color: royalblue;
+        border-color: purple;
+        border-radius: 20px;
+        border-width: 5px;
+        border-left-color: red;
+        border-right-color: red;
+        border-bottom-color:  red;
+        border-top-color: red;
+        border-image: url('');
+    }
+
+</style>
+</body>
+</html>

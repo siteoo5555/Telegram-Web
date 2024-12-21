@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    /*-----------------  GOOGLE FONTS  -----------------*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500;600&display=swap');
+:root {
+    /* Colors */ 
+    --orange-color: rgb(246, 99, 53);
+    --dark-color:rgb(27, 31, 41);
+    --border: rgba(255, 255, 255, 0.25);
+    --background: rgba(255, 255, 255, 0.1);
+    --box_shadow: rgba(3, 46, 87, 0.3);
+}
+
+button {
+    all: unset;
+    cursor: pointer;
+  }
+
+  @media (display-mode: fullscreen) {
+    body {
+      background-color: #f9bb86;
+      font-size: 1.2em;
+    }
+  }
+
+
+html{
+    font-size: 10px;
+    /* Now 1rem = 10px */
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    background: url(images/background.jpg);
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('https://png.pngitem.com/pimgs/s/350-3508332_meadow-lawn-wallpaper-lake-nature-background-png-hd.png');
+}
+.container {
+    width: 35%;
+    height: auto;
+    background: var(--background);
+    backdrop-filter: blur(0.5rem);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 1rem;
+    background-color: powderblue;
+    box-shadow: 0 1.8rem 3.7rem var(--box_shadow);
+}
+.search_box {
+  width: 40rem;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  border-radius: 3rem;
+  padding: 1rem 1rem;
+  backdrop-filter: blur(0.4rem) saturate(180%);
+  box-shadow: 0 1.8rem 3.7rem var(--box_shadow);
+  margin-top: 5rem;
+} 
+.search_box input {
+  background: transparent;
+  flex: 1;
+  border: 0;
+  outline: none;
+  padding: 0 1rem;
+  font-size: 1.6rem;
+  color:var(--dark-color);
+}
+.search_box input::placeholder {
+  color: var(--dark-color);
+}
+.search_box button {
+  border: 0;
+  border-radius: 50%;
+  background:var(--orange-color);
+  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+}
+.search_box .icon {
+  width: 2rem;
+  height: 2rem; 
+  padding: 0.5rem;
+  color: var(--dark-color); 
+}
+.error {
+  margin: 4rem 0 5rem 0;
+  color: var(--dark-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 2rem;
+  letter-spacing: 0.1rem;
+}
+#show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#show h2 {
+  color: var(--dark-color);
+  text-transform: uppercase;
+  letter-spacing: 0.18rem;
+  font-weight: 600;
+  font-size: 2.6rem;
+  margin: 3rem 0 2rem 0;
+}
+.weather, .desc {
+  color: var(--dark-color);
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 2rem;
+}
+.weather {
+  margin: 1rem 0;
+}
+#show img {
+  margin: 2rem 0 0 0;
+  width: 10rem;
+  filter: drop-shadow(0 1.8rem 3.7rem var(--shadow));
+}
+#show h1 {
+  font-size: 6rem;
+  margin: 2rem 0 2rem 0;
+  line-height: 0;
+  font-weight: 400;
+  color: var(--dark-color);
+}
+.temp_container {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0 5rem 0;
+  text-align: center;
+}
+.temp_container div {
+  padding: 1rem 1.5rem;
+}
+.temp_container div:first-child {
+  border-right: 0.1rem solid var(--border);
+}
+.temp_container .title {
+  font-weight: 600;
+  color: var(--dark-color);
+  font-size: 1.6rem;
+}
+.temp_container .temp {
+  font-weight: 600;
+  color: var(--orange-color);
+  font-size: 1.6rem;
+}
+</style>
+    <title>Weather Web App</title>
+    <link rel="icon" href="https://openweathermap.org/img/w/50d.png">
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+</head>
+<body>
+  <button onclick="toggleFullscreen()">
+    <svg width="30" height="30">
+      <path
+        id="enter-fullscreen"
+        stroke="black"
+        stroke-width="3"
+        fill="none"
+        d="
+           M 10, 2 L 2,2 L 2, 10
+           M 20, 2 L 28,2 L 28, 10
+           M 28, 20 L 28,28 L 20, 28
+           M 10, 28 L 2,28 L 2, 20"
+        />
+      <path
+        id="exit-fullscreen"
+        stroke="transparent"
+        stroke-width="3"
+        fill="none"
+        d="
+           M 10, 2 L 10,10 L 2, 10
+           M 20, 2 L 20,10 L 28, 10
+           M 28, 20 L 20,20 L 20, 28
+           M 10, 28 L 10,20 L 2, 20"
+        />
+    </svg>
+  </button>
+    <div class="container">
+      <div class="search_box"> 
+        <input type="text" placeholder="Enter a city name" id="city" value="America" autocomplete="off"/>
+        <button id="search" title="Search"><ion-icon class="icon" name="search"></ion-icon></button>
+      </div>
+      <div id="show"></div>
+      <div id="todayTime"></div>
+    </div>
+<script>
+let show = document.getElementById("show");
+let search = document.getElementById("search");
+let cityVal = document.getElementById("city");
+const times = document.getElementById('todayTime');
+let key = "2f745fa85d563da5adb87b6cd4b81caf";
+let getWeather = () => {
+  let cityValue = cityVal.value;
+  if (cityValue.length == 0) {
+    show.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/4830/4830735.png"><h3 class="error" style="color: red;">Please enter a city name....Otherwise You don't know the weather</h3>`;
+  }
+  else {
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityValue}&appid=${key}&units=metric`;
+    cityVal.value = "";
+    fetch(url)
+      .then((resp) => resp.json())
+      .then((data) => {
+        show.innerHTML = `
+        <h2>${data.name}, ${data.sys.country}</h2>
+        <h4 class="weather">${data.weather[0].main}</h4>
+        <h4 class="desc">${data.weather[0].description}</h4>
+        <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png">
+        <h1>${data.main.temp} &#176;</h1>
+        <div class="temp_container">
+         <div>
+            <h4 class="title">min</h4>
+            <h4 class="temp">${data.main.temp_min}&#176;</h4>
+         </div>
+         <div>
+            <h4 class="title">max</h4>
+            <h4 class="temp">${data.main.temp_max}&#176;</h4>
+         </div>   
+        </div>
+        `;
+      })
+      .catch(() => {
+        show.innerHTML = `
+                <img src="https://ph-files.imgix.net/92e2aeea-98b1-4b2d-9a8f-0e8f711d3975.png?auto=format">
+        <h3 class="error">City not found.</h3>`
+        ;
+      });
+  }
+};
+function leftInterval() {
+            const left = document.getElementById('todayTime')
+            let leftDate = new Date();
+            let hours = leftDate.getHours();
+            let minutes = leftDate.getMinutes();
+            let seconds = leftDate.getSeconds();
+            if (hours == 0) {
+                hours = 12;
+            }
+            if (hours > 12) {
+                hours = hours - 12;
+            }
+            left.innerHTML = `${hours}h: ${minutes}m: ${seconds}s`
+        }
+        setInterval(leftInterval, 1000);
+search.addEventListener("click", getWeather);
+window.addEventListener("load", getWeather);
+</script>
+<script>
+  const enterFullscreen = document.getElementById("enter-fullscreen");
+const exitFullscreen = document.getElementById("exit-fullscreen");
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+    enterFullscreen.setAttribute("stroke", "transparent");
+    exitFullscreen.setAttribute("stroke", "red");
+  } else {
+    document.exitFullscreen();
+    enterFullscreen.setAttribute("stroke", "black");
+    exitFullscreen.setAttribute("stroke", "transparent");
+  }
+}
+</script>
+</body>   
+</html> 

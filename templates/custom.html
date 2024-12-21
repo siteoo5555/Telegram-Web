@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!-- YouTube - CodingLab -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>𝓒𝓪𝓹𝓽𝓬𝓱𝓪</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/6357/6357173.png">
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #826afb;
+}
+.container {
+  position: relative;
+  max-width: 300px;
+  width: 100%;
+  border-radius: 12px;
+  padding: 15px 25px 25px;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+header {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+.input_field {
+  position: relative;
+  height: 45px;
+  margin-top: 15px;
+  width: 100%;
+}
+.refresh_button {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: #826afb;
+  height: 30px;
+  width: 30px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+.refresh_button:active {
+  transform: translateY(-50%) scale(0.98);
+}
+.input_field input,
+.button button {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 15px;
+}
+.input_field input {
+  padding: 0 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.captch_box input {
+  color: #6b6b6b;
+  font-size: 22px;
+  pointer-events: none;
+}
+.captch_input input:focus {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+.buttons {
+  width: 48px;
+  height: 48px;
+  background-color: #ff0000;
+  border-radius: 48px;
+  border: 2px solid #7df229;
+  border-width: 5px;
+  transition: all 0.3s ease;
+}
+
+.buttons::after {
+  content: "\279C";
+  font-size: 18px;
+  color: #bfff00;
+  transition: all 0.3s ease;
+}
+
+.buttons:hover {
+  border-color: #ff00c3;
+}
+
+.buttons:hover::after {
+  color: #14519f;
+}
+
+
+
+.message {
+  font-size: 14px;
+  margin: 14px 0;
+  color: #826afb;
+  display: none;
+}
+.message.active {
+  display: block;
+}
+.button button {
+  background: #826afb;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+}
+.button button:active {
+  transform: scale(0.99);
+}
+
+.button.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+</style>
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>𝐄𝐧𝐭𝐞𝐫 𝐂𝐚𝐩𝐭𝐜𝐡𝐚</header>
+      <div class="input_field captch_box">
+        <input type="text" value="" disabled />
+        <button class="refresh_button" title="Refresh">
+          <i class="fa-solid fa-rotate-right"></i>
+        </button>
+      </div>
+      <div class="input_field captch_input">
+        <input type="text" placeholder="Enter captcha" />
+      </div>
+      <div class="message">𝓔𝓷𝓽𝓮𝓻𝓮𝓭 𝓬𝓪𝓹𝓽𝓬𝓱𝓪 𝓲𝓼 𝓬𝓸𝓻𝓻𝓮𝓬𝓽</div>
+      <div class="input_field button disabled">
+        <button title="Submit">𝐒𝐮𝐛𝐦𝐢𝐭 𝐂𝐚𝐩𝐭𝐜𝐡𝐚</button>
+      </div>
+    </div>
+    <h6><h6><h6><h6 style="color: #826afb;">||||||||</h6></h6></h6></h6>
+<a href="{% url 'security' %}"><button type="submit" class="buttons"></button></a>
+<script>
+// Selecting necessary DOM elements
+const captchaTextBox = document.querySelector(".captch_box input");
+const refreshButton = document.querySelector(".refresh_button");
+const captchaInputBox = document.querySelector(".captch_input input");
+const message = document.querySelector(".message");
+const submitButton = document.querySelector(".button");
+
+// Variable to store generated captcha
+let captchaText = null;
+
+// Function to generate captcha
+const generateCaptcha = () => {
+  const randomString = Math.random().toString(36).substring(2, 7);
+  const randomStringArray = randomString.split("");
+  const changeString = randomStringArray.map((char) => (Math.random() > 0.5 ? char.toUpperCase() : char));
+  captchaText = changeString.join("   ");
+  captchaTextBox.value = captchaText;
+  console.log(captchaText);
+};
+const refreshBtnClick = () => {
+  generateCaptcha();
+  captchaInputBox.value = "";
+  captchaKeyUpValidate();
+};
+
+const captchaKeyUpValidate = () => {
+  //Toggle submit button disable class based on captcha input field.
+  submitButton.classList.toggle("disabled", !captchaInputBox.value);
+
+  if (!captchaInputBox.value) message.classList.remove("active");
+};
+
+// Function to validate the entered captcha
+const submitBtnClick = () => {
+  captchaText = captchaText
+    .split("")
+    .filter((char) => char !== " ")
+    .join("");
+  message.classList.add("active");
+  // Check if the entered captcha text is correct or not
+  if (captchaInputBox.value === captchaText) {
+    window.location.reload = "home.html"
+    message.style.color = "#826afb";
+  } else {
+    message.innerText = "Enter correct code!.Otherwise ban";
+    message.style.color = "#eb3a34";
+  }
+};
+
+// Add event listeners for the refresh button, captchaInputBox, submit button
+refreshButton.addEventListener("click", refreshBtnClick);
+captchaInputBox.addEventListener("keyup", captchaKeyUpValidate);
+submitButton.addEventListener("click", submitBtnClick);
+generateCaptcha();
+</script>
+  </body>
+</html>

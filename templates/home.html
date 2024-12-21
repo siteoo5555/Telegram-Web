@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🆃🅴🅻🅴🅶🆁🅰︎🅼  🆆🅴🅱︎</title>
+  <link rel="shortcut icon" href="https://play-lh.googleusercontent.com/ZU9cSsyIJZo6Oy7HTHiEPwZg0m2Crep-d5ZrfajqtsH-qgUXSqKpNA2FpPDTn-7qA5Q=w240-h480-rw">
+  <link rel="stylesheet" href="../static/css.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/css/uikit.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <center>
+      {% if not request.user.is_authenticated %}
+    <button type="button" class="btn btn-outline-primary"><a href="{% url 'create_profile' %}">Create_Profile</a></button>
+    {% else %}
+  </center>
+  {% endif %}
+<!-- <section class="mainApp"> -->
+  <div class="leftPanel">
+    <header>
+      <button class="trigger">
+    <i class="fa-solid fa-bars" style="width: 35px;height: 35px;margin-top: -9px;margin-left: -8px;margin-right: -15px;margin-bottom: -10px;"></i>
+      </button>
+      <form action="" method="get">
+      <input  name="search" class="searchChats" type="search" placeholder="Search"/>
+    </form>
+    </header>
+    
+      <div class="chats">
+        <button id="toggle" class="toggle" type="checkbox"></button>
+<div class="background"></div>
+<style>
+  // magic
+.toggle {
+  --size: 2rem;
+  
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  
+  width: var(--size);
+  height: var(--size);
+  box-shadow: inset calc(var(--size) * 0.33) calc(var(--size) * -0.25) 0;
+  border-radius: 999px;
+  color: hsl(240, 100%, 95%);
+  
+  transition: all 500ms;
+  
+  &:checked {
+    --ray-size: calc(var(--size) * -0.4);
+    --offset-orthogonal: calc(var(--size) * 0.65);
+    --offset-diagonal: calc(var(--size) * 0.45);
+
+    transform: scale(0.75);
+    color: hsl(40, 100%, 50%);
+    box-shadow: 
+      inset 0 0 0 var(--size),
+      calc(var(--offset-orthogonal) * -1) 0 0 var(--ray-size),
+      var(--offset-orthogonal) 0 0 var(--ray-size),
+      0 calc(var(--offset-orthogonal) * -1) 0 var(--ray-size),
+      0 var(--offset-orthogonal) 0 var(--ray-size),
+      calc(var(--offset-diagonal) * -1) calc(var(--offset-diagonal) * -1) 0 var(--ray-size),
+      var(--offset-diagonal) var(--offset-diagonal) 0 var(--ray-size),
+      calc(var(--offset-diagonal) * -1) var(--offset-diagonal) 0 var(--ray-size),
+      var(--offset-diagonal) calc(var(--offset-diagonal) * -1) 0 var(--ray-size),
+    ;
+  }
+}
+
+// layout
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.background {
+  --bg: hsl(240, 100%, 10%);
+  background: var(--bg);
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  transition: background 500ms;
+}
+
+.toggle {
+  z-index: 1;
+  &:checked {
+    & ~ .background {
+      --bg: white;
+    }
+    & ~ .title {
+      --color: hsl(40, 100%, 50%);
+    }
+  }
+}
+
+.title {
+  --color: hsl(240, 100%, 95%);
+  color: var(--color);
+  z-index: 1;
+  cursor: pointer;
+  display: block;
+  padding: 0.5rem 0 0;
+  transition: color 500ms;
+}
+</style>
+<script>// unrelated, just sets the default state based on your browser time :)
+
+  const toggle = document.querySelector('.toggle');
+  const hours = new Date().getHours();
+  toggle.checked = hours > 7 && hours < 20;</script>
+        {% for i in chats %}
+          <div class="chatButton ">
+            <div class="chatInfo">
+            <form action="" method="get">
+              <input type="hidden" value="{{i.id}}" name="id">
+                <div class="image my-image">
+                </div>
+                <p class="name">
+              <button type="submit" style="color: rgb(51, 72, 191);font-size: 13px;">
+                  <h2>
+                      {{i.name}}
+                  </h2>
+              </button>
+                </p>
+                <p class="message"></p>
+            </form>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+  </div>
+  <div class="rightPanel">
+    <div class="topBar">
+      <div class="rightSide">
+     {% if request.user in chat.Admin.all %}
+     {% if chat %}
+        <i class="material-icons"></i>
+        <button class="tbButton otherOptions">
+        <a href="{% url 'remove' chat.id %}"><i class="material-icons"><i class="fa-solid fa-user-minus" style="width: 15px;height: 15px;color: rgb(255, 0, 0);"></i></i></a>
+        </button>
+    {% else %}
+    {% endif %}
+    {% else %}
+    {% endif %}
+    {% if request.user in chat.Admin.all %}
+    {% if chat %}
+       <i class="material-icons"></i>
+       <button class="tbButton otherOptions">
+       <a href="{% url 'delete' chat.id %}"><i class="material-icons"><i class="fa-solid fa-trash" style="width: 15px;height: 15px;color: rgb(255, 0, 0);"></i></i></a>
+       </button>
+   {% else %}
+   {% endif %}
+   {% else %}
+   {% endif %}
+    </div>
+      {% if chat %}
+      <button class="go-back">
+        <a href="{% url 'home' %}"><i style="color: black;" class="fa-solid fa-backward" ></i></a>
+      </button>
+      {% else %}
+      {% endif %}
+      {% if chat %}
+      <div class="leftSide">
+      <h3 class="chatName">{{chat.name}}</h3>
+      <p class="chatStatus">{{chat.members.count}} members</p>
+      {% if chat %}
+          <i class="material-icons"></i>
+          <button class="tbButton otherOptions">
+          <a href="{% url 'edit' chat.id %}"><i class="fa-solid fa-pencil"></i></a>
+          </button>
+      {% else %}
+      {% endif %}
+    {% if chat %}
+    <i class="material-icons"></i>
+    <button class="tbButton otherOptions">
+    <a href="{% url 'add' chat.id %}"><i class="fa-solid fa-user-plus"></i></a>
+    </button>
+ {% else %}
+ {% endif %}
+      </div>
+      {% else %}
+      {% endif %}
+      {% if request.user.is_authenticated %}
+      <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" style="margin-left: 1000px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+</svg>
+</button>
+<button id="toggle" class="toggle" type="checkbox"></button>
+<div class="background"></div>
+<style>
+  // magic
+.toggle {
+  --size: 2rem;
+  
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  
+  width: var(--size);
+  height: var(--size);
+  box-shadow: inset calc(var(--size) * 0.33) calc(var(--size) * -0.25) 0;
+  border-radius: 999px;
+  color: hsl(240, 100%, 95%);
+  
+  transition: all 500ms;
+  
+  &:checked {
+    --ray-size: calc(var(--size) * -0.4);
+    --offset-orthogonal: calc(var(--size) * 0.65);
+    --offset-diagonal: calc(var(--size) * 0.45);
+
+    transform: scale(0.75);
+    color: hsl(40, 100%, 50%);
+    box-shadow: 
+      inset 0 0 0 var(--size),
+      calc(var(--offset-orthogonal) * -1) 0 0 var(--ray-size),
+      var(--offset-orthogonal) 0 0 var(--ray-size),
+      0 calc(var(--offset-orthogonal) * -1) 0 var(--ray-size),
+      0 var(--offset-orthogonal) 0 var(--ray-size),
+      calc(var(--offset-diagonal) * -1) calc(var(--offset-diagonal) * -1) 0 var(--ray-size),
+      var(--offset-diagonal) var(--offset-diagonal) 0 var(--ray-size),
+      calc(var(--offset-diagonal) * -1) var(--offset-diagonal) 0 var(--ray-size),
+      var(--offset-diagonal) calc(var(--offset-diagonal) * -1) 0 var(--ray-size),
+    ;
+  }
+}
+
+// layout
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.background {
+  --bg: hsl(240, 100%, 10%);
+  background: var(--bg);
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  transition: background 500ms;
+}
+
+.toggle {
+  z-index: 1;
+  &:checked {
+    & ~ .background {
+      --bg: white;
+    }
+    & ~ .title {
+      --color: hsl(40, 100%, 50%);
+    }
+  }
+}
+
+.title {
+  --color: hsl(240, 100%, 95%);
+  color: var(--color);
+  z-index: 1;
+  cursor: pointer;
+  display: block;
+  padding: 0.5rem 0 0;
+  transition: color 500ms;
+}
+</style>
+<script>// unrelated, just sets the default state based on your browser time :)
+
+  const toggle = document.querySelector('.toggle');
+  const hours = new Date().getHours();
+  toggle.checked = hours > 7 && hours < 20;</script>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">OPTIONS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" title="Close"></button>
+      </div>
+      <div class="modal-body">
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Games" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'games' %}" title="Games">𝙶𝚊𝚖𝚎𝚜</a></button>  
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Help" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'help' %}" title="Help">𝙷𝚎𝚕𝚙</a></button>
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="User Edit" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'user_edit' %}" title="User Edit">𝚄𝚜𝚎𝚛 𝙴𝚍𝚒𝚝</a></button>
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Telegram FAQ" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'about' %}" title="Telegram FAQ">𝙰𝚋𝚘𝚞𝚝 𝙾𝚞𝚛 𝙲𝚘𝚖𝚖𝚞𝚗𝚒𝚝𝚢</a></button>
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Telegram FAQ" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'our_team' %}" title="Our Team">𝙾𝚞𝚛 𝚃𝚎𝚊𝚖</a></button>
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Change Password" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'change_password' %}" title="Change Password">𝙲𝚑𝚊𝚗𝚐𝚎 𝙿𝚊𝚜𝚜𝚠𝚘𝚛𝚍</a></button>
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Logout" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'logout' %}" title="Logout">𝙻𝚘𝚐𝚘𝚞𝚝</a></button> 
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" title="Close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    {% endif %}
+    <div class="convHistory userBg">
+      <!-- CONVERSATION GOES HERE! -->
+      {% for j in chat.chat_messages.all %}
+        {% if j.user == request.user %}
+
+          <div class="msg messageSent">
+          <span>{{j.user.username}}</span>  
+          <!-- <form action="" method="post">   
+            {% csrf_token %}
+            <input type="hidden" name="one" value="{{i.id}}">
+            <button><i class="fa-solid fa-heart">   {{i.likes.count}}</i></button>
+            <br><hr>
+          </form> --> 
+          <hr>
+            <p>{{j.sms}}</p>
+
+            <span class="timestamp">{{j.created}}</span>
+            <span class="timestamp">
+              {% if j.is_read %}
+              <ion-icon class="fa-solid fa-check-double" style="width: 20px;height: 20px; margin-right: -20px;"></i>
+              {% else %}
+              <ion-icon class="fa-solid fa-circle-check" style="width: 20px;height: 20px; margin-right: -20px;"></i>
+              {% endif %}
+            </span>
+          </div>
+        {% else %}
+
+          <div class="msg messageReceived">
+            <span class="user">{{j.user.username}}</span>
+            <br><hr>
+            <p>{{j.sms}}</p>
+            <span class="timestamp">{{j.created}}</span>
+          </div>
+          {% endif %}
+    {% endfor %}
+    </div>
+    <div class="replyBar">
+      {% if chat.Admin == request.user in chat.Admins.all or request.user in chat.members.all %}
+      {% if chat.tur == "channel"  %}
+      <form action="" method="post">
+              {% csrf_token %}
+            <input type="text" class="replyMessage" placeholder="Message" name="sms"/>
+            <input type="hidden" name="id" value="{{chat.id}}">
+          <button type="submit">send</button>
+      </form>
+      {% else %}
+        <form action="" method="post">
+              {% csrf_token %}
+            <input type="text" class="replyMessage" placeholder="Message" name="sms"/>
+            <input type="hidden" name="id" value="{{chat.id}}">
+          <button type="submit">send</button>
+        </form>
+      {% endif %}
+      <style>
+        h1{
+          color: blue;
+          font-size: 45px;
+        }
+      </style>
+      <script>
+        function doSomething(){
+            document.getElementById("greeting").innerHTML = "UNMUTE";
+        }
+      </script>
+          <center><button  type="button" onclick="doSomething()"><p id="greeting" style="font-size: 3.1em; color: rgb(0, 0, 255);">MUTE</p></button></center>
+          <center><button style="font-size:40px; background-color:grey; color:lightblue; border-radius:25px;"></button></center>
+    {% else %}
+    <center>
+      {% if chat %}
+      <form action="" method="post">
+        {% csrf_token %}
+          <input type="hidden" value="{{chat.id}}" name="azo">
+          <button style="font-size: 40px; color: rgb(0, 0, 255);" type="submit">JOIN</button>
+      </form>
+      {% else %}
+      {% endif %}
+    </center>
+    {% endif %}
+  </div>
+<!-- </section> -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

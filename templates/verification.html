@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>𝓐𝓻𝓮 𝔂𝓸𝓾 𝓪 𝓗𝓾𝓶𝓪𝓷?!</title>
+        <link rel="icon" href="https://w7.pngwing.com/pngs/403/102/png-transparent-captcha-automatic-code-password-public-test-turing-pinpoint-interface-ii-icon-thumbnail.png"/>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+            crossorigin="anonymous"
+        />
+        
+<style>
+    :root {
+    --grey: #ddd;
+    --black: #000;
+}
+
+label {
+    font-size: 20px;
+}
+
+#checkbox {
+    cursor: pointer;
+}
+body {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+h1 {
+    padding-bottom: 0.5rem;
+}
+.btn {
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+.correct-color-box {
+    margin-left: 10px;
+    margin-bottom: 50px;
+    display: flex;
+    background-color: rgb(134, 5, 5);
+    border-radius: 10px;
+    width: 100px;
+    height: 100px;
+    border: 2px solid;
+    box-shadow: 0 0 1px 2px var(--black);
+}
+
+.color-box:hover {
+    transform: translate3d(2px, 2px, 0px);
+    border: 5px solid;
+    border-color: rgb(250, 250, 250);
+}
+.color-box {
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 0 1px 2px var(--black);
+}
+
+.color-boxes-container {
+    display: grid;
+    margin-bottom: 50px;
+    width: 320px;
+    height: 320px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.form-box {
+    margin-bottom: 50px;
+}
+
+/* isHuman HTML Page */
+.welcome {
+    display: flex;
+    margin: 15%;
+    justify-content: center;
+}
+</style>
+    </head>
+    <body>
+        <h1 style="color: greenyellow;background-color: black;border-radius: 10px;border-style: ridge;">𝚂𝚎𝚕𝚎𝚌𝚝 𝚝𝚑𝚎 𝚌𝚘𝚛𝚛𝚎𝚌𝚝 𝚌𝚘𝚕𝚘𝚛</h1><br>
+        <div class="correct-color-box"></div>
+        <main class="color-boxes-container">
+            <div class="color-box"></div>
+            <div class="color-box"></div>
+            <div class="color-box"></div>
+            <div class="color-box"></div>
+            <div class="color-box"></div>
+            <div class="color-box"></div>
+            <div class="color-box"></div>
+            <div class="color-box"></div>
+            <div class="color-box"></div>
+        </main>
+        <!-- Form box -->
+        <div class="form-box">
+            <form action="{% url 'home' %}">
+                <input type="checkbox" id="checkbox" required="required" />
+                <label for="checkbox" style="color: rgb(0, 200, 255);background-color: black;border-radius: 10px;border-style: ridge;">𝐀𝐫𝐞 𝐲𝐨𝐮 𝐡𝐮𝐦𝐚𝐧?</label>
+                <button class="btn btn-dark" type="submit" title="Submit">🆂︎🆄🅱︎🅼🅸🆃</button>
+            </form>
+        </div>
+<script>
+const deactivateDisabled = function (element) {
+    element.disabled = false;
+};
+
+const activateDisabled = function (element) {
+    element.disabled = true;
+};
+
+const toggleDisabled = function (element) {
+    if (element.disabled) {
+        deactivateDisabled(element);
+    } else {
+        activateDisabled(element);
+    }
+};
+
+const getRandomColor = function () {
+    return `#${((Math.random() * 0xffffff) << 0)
+        .toString(16)
+        .padStart(6, '0')}`;
+};
+
+const setColorTo = function (box, color) {
+    box.style.background = color;
+};
+
+const reloadWindow = function () {
+    this.location.reload();
+};
+
+const hideElement = function (element) {
+    element.style.display = 'none';
+};
+
+// DOM variables
+const submitBtn = document.querySelector('button');
+const checkbox = document.getElementById('checkbox');
+const correctColorBox = document.querySelector('.correct-color-box');
+const colorBoxes = document.querySelectorAll('.color-box');
+const colorBoxesContainer = document.querySelector('main');
+const h1Element = document.querySelector('h1');
+
+// Main
+const correctColor = getRandomColor();
+const randomIndex = Math.floor(Math.random() * colorBoxes.length);
+const colorBoxToGuess = colorBoxes[randomIndex];
+
+activateDisabled(checkbox);
+activateDisabled(submitBtn);
+
+setColorTo(correctColorBox, correctColor);
+
+colorBoxes.forEach((box) => {
+    setColorTo(box, getRandomColor());
+});
+
+setColorTo(colorBoxToGuess, correctColor);
+
+colorBoxes.forEach((box) => {
+    box.addEventListener('click', (event) => {
+        if (box === colorBoxToGuess) {
+            alert('You are human!');
+            toggleDisabled(checkbox);
+            toggleDisabled(submitBtn);
+            hideElement(colorBoxesContainer);
+            hideElement(h1Element);
+        } else {
+            alert('Please verify that you are human');
+            reloadWindow();
+        }
+    });
+});
+</script>
+    </body>
+</html>
