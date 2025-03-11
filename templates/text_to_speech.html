@@ -1,135 +1,218 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
-<title>Text to Speech</title>
-<link rel="stylesheet" href="https://www.outsystems.com/Forge_CW/_image.aspx/Q8LvY--6WakOw9afDCuuGcM9L99R6-0m1t8VVxCRXgU=/text-to-speech-engine-2023-01-04%2000-00-00-2024-06-29%2005-42-52">
-<style>
-    *,*:after,*:before{
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/9100/9100419.png">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;             
 }
+
 body{
-  font-family: arial;
-  font-size: 16px;
-  margin: 0;
-  color: #000;
-  
-  background-color: #228c97;
-  display: flex;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #5256ad;
 }
 
-.container{
-  width: 680px;;
-  text-align: center;
-  padding: 30px;
-  background: #fff;
-  border-radius: 15px;
+::selection{
+    color: #fff;
+    background-color: #5256ad;
 }
 
-#inputText{
-  width: 400px;
-  height: 200px;
-  padding: 20px;
-  resize: none;
-  font-size: 20px;
-  font-family: arial;
-  box-shadow: 0 0 5px #8c8c8c ;
-  border: 3px solid #8c8c8c;
-  border-radius: 10px;
-  outline: 0;
+.wrapper{
+    width: 370px;
+    padding: 25px 30px;
+    border-radius: 7px;
+    background-color: #fff;
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
 }
-.box{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 30px;
-  
+
+.wrapper header{
+    font-size: 28px;
+    font-weight: 500;
+    text-align: center;
 }
-#voiceIco{
-  font-size: 150px;
-  width: 210px;
-  text-align:left;
+
+.wrapper form{
+    margin: 35px 0 20px;
 }
-#convert{
-  padding: 15px 35px;
-  border-radius: 5px;
-  border: 0;
-  font-size: 20px;
-  background: #05737f;
-  color: #fff;
+
+form .row{
+    display: flex;
+    margin-bottom: 20px;
+    flex-direction: column;
 }
-</style>
+
+form .row label{
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+form .row:nth-child(2) label{
+    font-size: 17px;
+}
+
+form :where(textarea, select, button){
+    outline: none;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 5px;
+}
+
+form .row textarea{
+    resize: none;
+    height: 110px;
+    font-size: 15px;
+    padding: 8px 10px;
+    border: 1px solid #999;
+}
+
+form .row textarea::-webkit-scrollbar{
+    width: 0px;
+}
+
+form .row .outer{
+    height: 47px;
+    display: flex;
+    padding: 0 10px;
+    align-items: center;
+    border-radius: 5px;
+    justify-content: center;
+    border: 1px solid #999;
+}
+
+form .row select{
+    font-size: 14px;
+    background: none;
+}
+
+form .row select::-webkit-scrollbar{
+    width: 8px;
+}
+
+form .row select::-webkit-scrollbar-track{
+    background: #fff;
+}
+
+form .row select::-webkit-scrollbar-thumb{
+    background-color: #888;
+    border-radius: 8px;
+    border-right: 2px solid #fff;
+}
+
+form button{
+    height: 52px;
+    color: #fff;
+    font-size: 17px;
+    background-color: #675afe;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s ease;
+}
+
+form button:hover{
+    background-color: #4534fe;
+}
+
+@media(max-width: 400px) {
+    .wrapper{
+        max-width: 345px;
+        width: 100%;
+    }
+}
+    </style>
+    <title>Text To Speech App</title>
 </head>
+
 <body>
-  
-  <div class="container">
-    <div class="box">
-      <input name="text" type="text" id="inputText">
-      <span id="voiceIco">🔈</span>
+
+    <div class="wrapper">
+        <header>Text To Speech</header>
+        <form action="">
+            <div class="row">
+                <label>Enter Text</label>
+                <textarea></textarea>
+            </div>
+            <div class="row">
+                <label>Select Voice</label>
+                <div class="outer">
+                    <select></select>
+                </div>
+            </div>
+            <button>Convert To Speech</button>
+        </form>
     </div>
-    <button id="convert">Text to Speech</button>
-  </div>
 <script>
-    var convert = document.getElementById('convert'),
-voiceIco = document.getElementById('voiceIco'),
-speech  = document.getElementById('inputText'),
-count = 1;
+  const textarea = document.querySelector("textarea"),
+    voiceList = document.querySelector("select"),
+    speechBtn = document.querySelector("button");
 
-speech.addEventListener('change',function(){
-  speechText = this.value;
-  speechSynthesis.cancel();
-  convert.innerHTML = "Text to Speech";
-  voiceIco.innerHTML="🔈";
-});
-convert.addEventListener('click',function(){
-  if(!speechText.speaking || speechSynthesis.pause()){
-    speechText = speech.value;
-    var speechVoice = new SpeechSynthesisUtterance();
-    var voices = speechSynthesis.getVoices();
-    speechVoice.voice = voices[190];
-    speechVoice.text = speechText;
-    speechVoice.lang = 'ru-RU';
-    speechSynthesis.speak(speechVoice);  
-  }
+let synth = speechSynthesis,
+    isSpeaking = true;
 
-if(count == 1){
-  convert.innerHTML = "Play";
-  voiceIco.innerHTML="🔊";
-  speechSynthesis.resume()
-  setTimeout(() => {
-    count = 2;
-  }, 300);
-  
-}else{
-  speechSynthesis.paused
-  convert.innerHTML = "Pause";
-  voiceIco.innerHTML="🔈";
-  count = 1;
+voices();
 
+function voices() {
+    for (let voice of synth.getVoices()) {
+        let selected = voice.name === "Google US English" ? "selected" : "";
+        let option = `<option value="${voice.name}" ${selected}>${voice.name} (${voice.lang})</option>`;
+        voiceList.insertAdjacentHTML("beforeend", option);
+    }
 }
-setInterval(() => {
-  if(!speechSynthesis.speaking && count == 2){
-    convert.innerHTML = "Text to Speech";
-    voiceIco.innerHTML="🔈";
-    count = 1;
-    console.log(count)
-  }
-},100);
 
+synth.addEventListener("voiceschanged", voices);
 
-})
+function textToSpeech(text) {
+    let utterance = new SpeechSynthesisUtterance(text);
+    for (let voice of synth.getVoices()) {
+        if (voice.name === voiceList.value) {
+            utterance.voice = voice;
+        }
+    }
+    synth.speak(utterance);
+}
 
-
-// for(xx in new SpeechSynthesisUtterance()){
-//    console.log(xx)
-//  }
+speechBtn.addEventListener("click", e => {
+    e.preventDefault();
+    if (textarea.value !== "") {
+        // Checks if not speaking, Speak Textarea Text
+        if (!synth.speaking) {
+            textToSpeech(textarea.value);
+        }
+        // If text was long, Add Resume and Pause Function
+        if (textarea.value.length > 80) {
+            setInterval(() => {
+                if (!synth.speaking && !isSpeaking) {
+                    isSpeaking = true;
+                    speechBtn.innerText = "Convert To Speech";
+                } else { }
+            }, 500);
+            if (isSpeaking) {
+                synth.resume();
+                isSpeaking = false;
+                speechBtn.innerText = "Pause Speech";
+            } else {
+                synth.pause();
+                isSpeaking = true;
+                speechBtn.innerText = "Resume Speech";
+            }
+        } else {
+            speechBtn.innerText = "Convert To Speech";
+        }
+    }
+});
 </script>
 </body>
+
 </html>

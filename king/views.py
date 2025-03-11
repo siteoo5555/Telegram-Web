@@ -22,8 +22,9 @@ def Login(request):
             user = authenticate(request, username=username, password=parol)
             if user is not None:
                 login(request, user)
-                messages.success(request, f"Siz , {user.username}, login qilindingiz !")
-            return redirect('captcha')
+                messages.success(request, f"{user.username}, login qilindingiz!")
+                return redirect('captcha')
+        messages.error(request, "Usernameㅤorㅤpasswordㅤisㅤwrong")
     return render(request, 'login.html', {'form': form})
 
 class Home(View):
@@ -216,13 +217,56 @@ def spinner(request):
     ...
     return render(request, 'spin.html')
 
-def insect_catch(request):
-    ...
-    return render(request, 'insect_catch.html')
-
 def multiplayer_snake_game(request):
     ...
     return render(request, 'multiplayer_snake.html')
+
+
+def detect_device_battery(request):
+    ...
+    return render(request, 'detect_device_battery.html')
+
+
+def flip_coin_game(request):
+    ...
+    return render(request, 'flip_coin_game.html')
+
+
+
+def dictionary_app(request):
+    ...
+    return render(request, 'dictionary.html')
+
+
+def qr_code(request):
+    ...
+    return render(request, 'qr_code.html')
+
+def music_app(request):
+    return render(request, 'music.html')
+
+
+def geometric_art_generator(request):
+    ...
+    return render(request, 'geometric_art_generator.html')
+
+def rich_text_editor(request):
+    ...
+    return render(request, 'rich_text_editor.html')
+
+def budget_app(request):
+    ...
+    return render(request, 'budget_app.html')
+
+
+def password_generator(request):
+    ...
+    return render(request, 'pass_generator.html')
+
+
+def to_do_app(request):
+    ...
+    return render(request, 'to_do_app.html')
 
 def nitro_race(request):
     ...
@@ -270,6 +314,11 @@ def code_editor(request):
 def our_team(request):
     ...
     return render(request, 'our_team.html')
+
+
+def pixel_art_generator(request):
+    ...
+    return render(request, 'pixel_art_generator.html')
 
 def maze(request):
     ...
@@ -361,6 +410,11 @@ def chatbot(request):
     ...
     return render(request, 'chatbot.html')
 
+
+def shadow_generator(request):
+    ...
+    return render(request, 'shadow_generator.html')
+
 def translator(request):
     ...
     return render(request, 'translate.html')
@@ -426,9 +480,9 @@ def cat_attack(request):
     ...
     return render(request, 'cat_attack.html')
 
-def games(request):
+def tools_and_games(request):
     ...
-    return render(request, 'game.html')
+    return render(request, 'tools_and_games.html')
 
 def camping_crush(request):
     ...
@@ -475,6 +529,23 @@ def space_defense(request):
 def wizard_westy_game(request):
     ...
     return render(request, 'wizard_westy.html')
+
+def wikipedia_searcher(request):
+    ...
+    return render(request, 'wikipedia_searcher.html')
+
+def image_color_picker(request):
+    ...
+    return render(request, 'image_color_picker.html')
+
+
+def detect_internet_speed(request):
+    ...
+    return render(request, 'detect_internet_speed.html')
+
+def url_shortener(request):
+    ...
+    return render(request, 'url_shortener.html')
 
 
 def matching(request):

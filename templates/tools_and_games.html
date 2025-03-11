@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝖳𝖮𝖮𝖫𝖲 𝖠𝖭𝖣 𝖦𝖠𝖬𝖤𝖲 𝖯𝖠𝖦𝖤</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5107/5107993.png">
+    {% if request.user.is_authenticated %} 
+<style>
+    body{
+        background-color: green;
+    }
+    .button{
+        background-color: white;
+        color: black;
+        border-radius: 30px;
+        font-size: large;
+        border-style: ridge;
+        border-width: 5px;
+        border-color: pink;
+    }
+    a{
+        text-decoration: none;
+        color: black;
+    }   
+    img{
+        height: 45px;
+        border-radius: 15px;
+    }
+</style>
+</head>
+<body>
+    <center>
+    <h1 style="background-color: red;color: white;"><b>ＴＯＯＬＳ ㅤ  ＡＮＤㅤ ＧＡＭＥＳㅤ ＰＡＧＥ</b></h1>
+<div class="row">
+<button type="submit" class="button"><a href="{% url 'dino_game' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy7ZTzJtd8_-PPm_0z25x7_sfPUI3DogfXVg&s" alt="Dinosaur Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'translator' %}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png" alt="Translator App"></a></button>
+<button type="submit" class="button"><a href="{% url 'calculator' %}" target="_blank"><img src="https://png.pngtree.com/png-vector/20190115/ourmid/pngtree-vector-calculator-icon-png-image_319747.jpg" alt="Calculator App"></a></button>
+<button type="submit" class="button"><a href="{% url 'memory_game' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMc5cjkoD4fCsIJkim0OCpv_gxbTUEVHyiqQ&s" alt="Memory Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'flappy_bird' %}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/en/0/0a/Flappy_Bird_icon.png" alt="Flappy Bird Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'tic' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/10199/10199746.png" alt="Tic Tac Toe Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'mouse' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1835/1835817.png" alt="Mouse Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'snake' %}" target="_blank"><img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/snake-game-625208.png" alt="Snake Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'car' %}" target="_blank"><img src="https://png.pngtree.com/png-vector/20201128/ourmid/pngtree-sports-car-png-image_2434986.jpg" alt="Car Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'bubble' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMq7aeg10m4qIfoFuC50IskOqwZN0KT2yvKg&s" alt="Bubble Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'shooter' %}" target="_blank"><img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/shooting-game-2638578-2185783.png" alt="Shooter Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'cross_road' %}" target="_blank"><img src="https://png.pngtree.com/png-vector/20191114/ourmid/pngtree-crossing-road-icon-flat-style-png-image_1978475.jpg" alt="Cross Road Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'space_defense' %}" target="_blank"><img src="https://cdn-icons-png.freepik.com/256/14959/14959932.png?semt=ais_hybrid" alt="Space Defense Game"></a></button> 
+<button type="submit" class="button"><a href="{% url 'candy_crush' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2o7vw3OkCkA8M97c8A9HDIZEv8tEvMDyy8A&sxxxx" alt="Candy Crush Game"></a></button> 
+<button type="submit" class="button"><a href="{% url 'matching' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/10257/10257147.png" alt="Matching Game"></a></button>   
+<button type="submit" class="button"><a href="{% url 'rock' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/6654/6654553.png" alt="Rock Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'slide' %}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/2048_logo.png" alt="Slide App"></a></button>
+<button type="submit" class="button"><a href="{% url 'gozilla' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/774/774860.png" alt="Gozilla Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'space_invaders' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWy7RTbO_jbyIRYJJoXSGzcG9Wjoeo6ELkkg&s" alt="Space Invaders Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'sonic' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4PZ0S8EfNRdq8MgfTIgfXhO_DxoiTHNOrUw&s" alt="Sonic Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'typing' %}" target="_blank"><img src="https://www.shutterstock.com/image-vector/hand-typing-on-laptop-working-260nw-1936311493.jpg" alt="Typing App"></a></button>
+<button type="submit" class="button"><a href="{% url 'chat_bot' %}" target="_blank"><img src="https://png.pngtree.com/png-vector/20230407/ourmid/pngtree-chatbot-line-icon-vector-png-image_6680403.png" alt="Chatbot App"></a></button>
+<button type="submit" class="button"><a href="{% url 'coronavirus' %}" target="_blank"><img src="https://images.vexels.com/media/users/3/199841/isolated/preview/96a7cac08ad4539e1888d8f5c82b5f48-coronavirus-covid19-icon.png?w=360" alt="Coronavirus Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'quiz' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5692/5692030.png" alt="Quiz "></a></button>    
+<button type="submit" class="button"><a href="{% url 'tower' %}" target="_blank"><img src="https://play-lh.googleusercontent.com/Ai4Ld0NsDjBi_TZwJ2KBSWFfmN_GJ9ckesdC3q1mXvzdiouAqgbwj6LoCvRn0x3rWMs" alt="Tower Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'tetris' %}" target="_blank"><img src="https://cdn-icons-png.freepik.com/512/744/744755.png" alt="Tetris Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'spinner' %}" target="_blank"><img src="https://png.pngtree.com/png-vector/20210227/ourmid/pngtree-spin-wheel-3d-hd-jackpot-stock-image-png-image_2936164.jpg" alt="Spinner "></a></button>
+<button type="submit" class="button"><a href="{% url 'slice' %}" target="_blank"><img src="https://png.pngtree.com/png-clipart/20201111/ourmid/pngtree-creative-apple-slices-fruit-real-photo-png-image_2418461.jpg" alt="Slice Fruit Game"></a></button>   
+<button type="submit" class="button"><a href="{% url 'bird' %}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0a/Flappy_Bird_icon.png/220px-Flappy_Bird_icon.png" alt="Flappy Bird"></a></button>    
+<button type="submit" class="button"><a href="{% url 'piano' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUmk8hhbZeORLozyuMYzwJfoPzmgJbArC-NQ&s" alt="Piano"></a></button>    
+<button type="submit" class="button"><a href="{% url 'zombie' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzJV-lgokzbncdEPqR3Xgw_T0evwrj6W17xa3MY7RdWgOi1XAl0gncZwfhBAC_OH6wvEs&usqp=CAU" alt="Zombie Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'maze_game' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5847/5847678.png" alt="Maze Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'country_guide' %}" target="_blank"><img src="https://i.pinimg.com/564x/4a/a5/34/4aa534605d1afc465c5bdc5dd80f1ecb.jpg" alt="Country Guide App"></a></button>
+<button type="submit" class="button"><a href="{% url 'spiderman_game' %}" target="_blank"><img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a98cff5d-a612-49d8-a0db-175994384b20/dfbovvh-4e4aecb7-ac74-46d7-aaa6-7ba922b0b0bb.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E5OGNmZjVkLWE2MTItNDlkOC1hMGRiLTE3NTk5NDM4NGIyMFwvZGZib3Z2aC00ZTRhZWNiNy1hYzc0LTQ2ZDctYWFhNi03YmE5MjJiMGIwYmIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.jKOT2qxyOr0S6d9SZXajSQFHjPKbycCistMbXpzcJbQ" alt="Spiderman Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'stop_watch' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2055/2055568.png" alt="Stop Watch"></a></button>
+<button type="submit" class="button"><a href="{% url 'predict' %}" target="_blank"><img src="https://gopostr.s3.amazonaws.com/favicon_url/HdILqHavEyRq4qSPAwTpayZ9tzoZZveAJlWFYWIJ.png" alt="Predict Gender App"></a></button>
+<button type="submit" class="button"><a href="{% url 'stick_hero' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm_HxIHxG3JO_4eOGn3M6jROJrHIzHMRIGX1t82EFvyO1pNBc8EsVeyw8PbsipYKjjw7k&usqp=CAU" alt="Stick Hero"></a></button>
+<button type="submit" class="button"><a href="{% url 'weather' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/128/6451/6451205.png" alt="Weather App"></a></button>
+<button type="submit" class="button"><a href="{% url 'archery' %}" target="_blank"><img src="https://png.pngtree.com/png-clipart/20210223/ourmid/pngtree-man-target-archery-clipart-png-image_2934457.jpg" alt="Archery"></a></button>
+<button type="submit" class="button"><a href="{% url 'bike_race' %}" target="_blank"><img src="https://img.freepik.com/premium-vector/bicycle-icon-bicycle-race-symbol-cycling-race-flat-icon-cyclist-sign-road-cyclist-silhouette_687076-113.jpg?w=360" alt="Bike Race"></a></button>
+<button type="submit" class="button"><a href="{% url 'nitro_race' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj2xXSTSFOUydKiNr-2BQhQokJHStDXrCukg&s" alt="Nitro Race Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'multiplayer_snake_game' %}" target="_blank"><img src="https://static.thenounproject.com/png/3681429-200.png" alt="Multiplayer Snake Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'cat_attack' %}" target="_blank"><img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/cat-attack-1539598-1306618.png?f=webp&w=256" alt="Cat Attack"></a></button>
+<button type="submit" class="button"><a href="{% url 'camping_crush' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFGBztTafxc69cQbnyyXoL9-mrDopjLa8zEg&s" alt="Camping Crush"></a></button>
+<button type="submit" class="button"><a href="{% url 'hockey' %}" target="_blank"><img src="https://cdn-icons-png.freepik.com/512/3153/3153881.png" alt="Hockey Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'gravity_botz' %}" target="_blank"><img src="https://scoutlife.org/wp-content/uploads/2020/08/gravitybotz-feature-1.jpg" alt="Gravity Botz Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'maze' %}" target="_blank"><img src="https://cdn-icons-png.freepik.com/256/7198/7198581.png?semt=ais_hybrid" alt="Maze Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'basketball_game' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/6191/6191580.png" alt="Basketball Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'hot_air_balloon' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/256/4256/4256370.png" alt="Hot Air Balloon"></a></button>
+<button type="submit" class="button"><a href="{% url 'monster_match_game' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGMrLfRmu_sNGe4HeblcEaxFjbNOU-_9M9lQ&s" alt="Monster Match game"></a></button>
+<button type="submit" class="button"><a href="{% url 'wizard_westy_game' %}" target="_blank"><img src="https://scoutlife.org/wp-content/uploads/2019/03/wizardwesty-feature.jpg?w=620" alt="Wizard Westy Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'cat_stack_game' %}" target="_blank"><img src="https://scoutlife.org/wp-content/uploads/2023/07/catstack-feature2.jpg" alt="Cat Stack Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'massive_word_search' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs6aWHOv2qTx-VlNoC61v3C1xS-EnYU6HAhw&s" alt="Massive Word Search"></a></button>
+<button type="submit" class="button"><a href="{% url 'flight_academy_game' %}" target="_blank"><img src="https://www.shutterstock.com/image-vector/flight-academy-logo-design-template-260nw-1487370857.jpg" alt="Flight Academy Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'burger_shack_stack_game' %}" target="_blank"><img src="https://masterbundles.com/wp-content/uploads/2023/04/1-19-1.jpg" alt="Burger Shack Stack Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'mini_derby_game' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3ignp23twSl_o3v9xTTw1n7XdrtGzr8vLgQ&s" alt=""></a></button>
+<button type="submit" class="button"><a href="{% url 'drift_derby_game' %}" target="_blank"><img src="https://64.media.tumblr.com/695da599fc5aa8b4ef9ed9162756927f/tumblr_inline_pk0bj2dsAa1qk1xpj_250sq.jpg" alt="Drift Derby Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'table_tennis_cup_game' %}" target="_blank"><img src="https://cdn3d.iconscout.com/3d/premium/thumb/table-tennis-3d-icon-download-in-png-blend-fbx-gltf-file-formats--ping-pong-racket-sport-pack-sports-games-icons-4468750.png" alt="Table Tennis Cup Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'monster_truck_challenge_game' %}" target="_blank"><img src="https://play-lh.googleusercontent.com/_yDQ0JcKtydDvS5kmPox6qBcbEnGswAhnJnws8GwT-3DOrfn6kMYCi6kIX4Cj6OCTA" alt="Monster Truck Challenge Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'extreme_ride_game' %}" target="_blank"><img src="https://images.sftcdn.net/images/t_app-icon-m/p/60690fd8-11f4-457c-82b5-3fa7e4f814d6/3485282001/riding-extreme-3d-logo" alt="Extreme Ride Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'text_to_speech' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/8984/8984813.png" alt="Text To Speech"></a></button>
+<button type="submit" class="button"><a href="{% url 'code_editor' %}" target="_blank"><img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/code-editor-5180922-4325780.png?f=webp&w=256" alt="Code Editor"></a></button>
+<button type="submit" class="button"><a href="{% url 'pixel_art_generator' %}" target="_blank"><img src="https://cdni.iconscout.com/illustration/premium/thumb/ai-image-generator-illustration-download-in-svg-png-gif-file-formats--general-logo-art-generate-technologies-pack-science-technology-illustrations-6715393.png?f=webp" alt="Pixel Art Generator"></a></button>
+<button type="submit" class="button"><a href="{% url 'pass_generator' %}" target="_blank"><img src="https://www.shutterstock.com/image-illustration/3d-encryption-password-generator-icon-260nw-2248497819.jpg" alt="Password Generator"></a></button>
+<button type="submit" class="button"><a href="{% url 'qr_code' %}" target="_blank"><img src="https://qrcodedynamic.com/themes/altum/assets/images/qr_code.svg" alt="Quick Response Generator"></a></button>
+<button type="submit" class="button"><a href="{% url 'detect_device_battery' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKgTV00JFQMFg7KxNo3QuPt39xCJYsuvcKxQ&s" alt="Detect Device Battery"></a></button>
+<button type="submit" class="button"><a href="{% url 'flip_coin_game' %}" target="_blank"><img src="https://static.thenounproject.com/png/2307580-200.png" alt="Flip Coin Game"></a></button>
+<button type="submit" class="button"><a href="{% url 'dictionary_app' %}" target="_blank"><img src="https://img.freepik.com/premium-vector/dictionary-minimal-vector-line-icon-3d-button-isolated-black-background-premium-vector_570929-2442.jpg?w=360" alt="Quick Response Generator"></a></button>
+<button type="submit" class="button"><a href="{% url 'to_do_app' %}" target="_blank"><img src="https://cdn-icons-png.freepik.com/256/8476/8476658.png?semt=ais_hybrid" alt="To Do App"></a></button>
+<button type="submit" class="button"><a href="{% url 'geometric_art_generator' %}" target="_blank"><img src="https://png.pngtree.com/png-vector/20190626/ourmid/pngtree-geometry-tools-line-black-icon-png-image_1507325.jpg" alt="Geometric Art Generator"></a></button>
+<button type="submit" class="button"><a href="{% url 'budget_app' %}" target="_blank"><img src="https://png.pngtree.com/png-vector/20230225/ourmid/pngtree-budget-line-icon-png-image_6620500.png" alt="Budget App"></a></button>
+<button type="submit" class="button"><a href="{% url 'rich_text_editor' %}" target="_blank"><img src="https://w7.pngwing.com/pngs/36/845/png-transparent-online-rich-text-editor-editing-computer-icons-text-file-others-icon-download-app-textedit.png" alt="Rich Text Editor "></a></button>
+<button type="submit" class="button"><a href="{% url 'shadow_generator' %}" target="_blank"><img src="https://market-resized.envatousercontent.com/previews/files/69484735/iconcreator-preview.png?w=590&h=590&cf_fit=crop&crop=top&format=auto&q=85&s=5c4d9df41da49ae2b06a4d64158b49cb107475d93145c44842c3e7fcfe6d5d6b" alt="Shadow Generator "></a></button>
+<button type="submit" class="button"><a href="{% url 'detect_internet_speed' %}" target="_blank"><img src="https://static.thenounproject.com/png/1742947-200.png" alt="Detect Internet Speed"></a></button>
+<button type="submit" class="button"><a href="{% url 'url_shortener' %}" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd6XFjvEf9VltpZL5NB1O-SvvM2MxDtCaMEA&s " alt="Url Shortener App"></a></button>
+<button type="submit" class="button"><a href="{% url 'image_color_picker' %}" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2867/2867978.png" alt="Image Color Picker"></a></button>
+<button type="submit" class="button"><a href="{% url 'wikipedia_searcher' %}" target="_blank"><img src="https://icon-library.com/images/wikipedia-icon-png/wikipedia-icon-png-11.jpg" alt="Wikipedia Searcher"></a></button>
+{% else %}
+<style>
+    body{
+        background-color: aquamarine;
+        text-align: center;
+    }
+</style>
+<br><br><br><br><br><br><br><br><br><br>
+<h1>You need to access My Website Forward Playing Games</h1><br>
+<h1><button style="font-size: 20px;background-color: white;border-radius: 15px;color: black;"><a href="{% url 'login' %}" style="text-decoration: none;text-transform: uppercase;color: red;">Click here</a></button> to Login</h1>
+<h1><button style="font-size: 20px;background-color: white;border-radius: 15px;color: black;"><a href="{% url 'user' %}" style="text-decoration: none;text-transform: uppercase;color: red;">Click here</a></button> to Register</h1>
+<h1></h1>
+    {% endif %}
+</center>
+</body>
+</html>

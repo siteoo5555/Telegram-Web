@@ -32,89 +32,6 @@
       <div class="chats">
         <button id="toggle" class="toggle" type="checkbox"></button>
 <div class="background"></div>
-<style>
-  // magic
-.toggle {
-  --size: 2rem;
-  
-  appearance: none;
-  outline: none;
-  cursor: pointer;
-  
-  width: var(--size);
-  height: var(--size);
-  box-shadow: inset calc(var(--size) * 0.33) calc(var(--size) * -0.25) 0;
-  border-radius: 999px;
-  color: hsl(240, 100%, 95%);
-  
-  transition: all 500ms;
-  
-  &:checked {
-    --ray-size: calc(var(--size) * -0.4);
-    --offset-orthogonal: calc(var(--size) * 0.65);
-    --offset-diagonal: calc(var(--size) * 0.45);
-
-    transform: scale(0.75);
-    color: hsl(40, 100%, 50%);
-    box-shadow: 
-      inset 0 0 0 var(--size),
-      calc(var(--offset-orthogonal) * -1) 0 0 var(--ray-size),
-      var(--offset-orthogonal) 0 0 var(--ray-size),
-      0 calc(var(--offset-orthogonal) * -1) 0 var(--ray-size),
-      0 var(--offset-orthogonal) 0 var(--ray-size),
-      calc(var(--offset-diagonal) * -1) calc(var(--offset-diagonal) * -1) 0 var(--ray-size),
-      var(--offset-diagonal) var(--offset-diagonal) 0 var(--ray-size),
-      calc(var(--offset-diagonal) * -1) var(--offset-diagonal) 0 var(--ray-size),
-      var(--offset-diagonal) calc(var(--offset-diagonal) * -1) 0 var(--ray-size),
-    ;
-  }
-}
-
-// layout
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}
-
-.background {
-  --bg: hsl(240, 100%, 10%);
-  background: var(--bg);
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  transition: background 500ms;
-}
-
-.toggle {
-  z-index: 1;
-  &:checked {
-    & ~ .background {
-      --bg: white;
-    }
-    & ~ .title {
-      --color: hsl(40, 100%, 50%);
-    }
-  }
-}
-
-.title {
-  --color: hsl(240, 100%, 95%);
-  color: var(--color);
-  z-index: 1;
-  cursor: pointer;
-  display: block;
-  padding: 0.5rem 0 0;
-  transition: color 500ms;
-}
-</style>
-<script>// unrelated, just sets the default state based on your browser time :)
-
-  const toggle = document.querySelector('.toggle');
-  const hours = new Date().getHours();
-  toggle.checked = hours > 7 && hours < 20;</script>
         {% for i in chats %}
           <div class="chatButton ">
             <div class="chatInfo">
@@ -134,17 +51,24 @@ body {
             </div>
           </div>
         {% endfor %}
+      </center>
       </div>
   </div>
   <div class="rightPanel">
     <div class="topBar">
       <div class="rightSide">
+        <center> 
+        {% for i in messages %}
+   <h6>{{ i }}</h6>
+        {% endfor%}
+      </center>
      {% if request.user in chat.Admin.all %}
      {% if chat %}
         <i class="material-icons"></i>
         <button class="tbButton otherOptions">
         <a href="{% url 'remove' chat.id %}"><i class="material-icons"><i class="fa-solid fa-user-minus" style="width: 15px;height: 15px;color: rgb(255, 0, 0);"></i></i></a>
         </button>
+        
     {% else %}
     {% endif %}
     {% else %}
@@ -274,7 +198,7 @@ body {
   transition: color 500ms;
 }
 </style>
-<script>// unrelated, just sets the default state based on your browser time :)
+<script>
 
   const toggle = document.querySelector('.toggle');
   const hours = new Date().getHours();
@@ -288,16 +212,15 @@ body {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" title="Close"></button>
       </div>
       <div class="modal-body">
-        <button type="submit" style="border-radius: 15px;background-color: green;" title="Games" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'games' %}" title="Games">𝙶𝚊𝚖𝚎𝚜</a></button>  
-        <button type="submit" style="border-radius: 15px;background-color: green;" title="Help" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'help' %}" title="Help">𝙷𝚎𝚕𝚙</a></button>
-        <button type="submit" style="border-radius: 15px;background-color: green;" title="User Edit" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'user_edit' %}" title="User Edit">𝚄𝚜𝚎𝚛 𝙴𝚍𝚒𝚝</a></button>
-        <button type="submit" style="border-radius: 15px;background-color: green;" title="Telegram FAQ" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'about' %}" title="Telegram FAQ">𝙰𝚋𝚘𝚞𝚝 𝙾𝚞𝚛 𝙲𝚘𝚖𝚖𝚞𝚗𝚒𝚝𝚢</a></button>
-        <button type="submit" style="border-radius: 15px;background-color: green;" title="Telegram FAQ" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'our_team' %}" title="Our Team">𝙾𝚞𝚛 𝚃𝚎𝚊𝚖</a></button>
-        <button type="submit" style="border-radius: 15px;background-color: green;" title="Change Password" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'change_password' %}" title="Change Password">𝙲𝚑𝚊𝚗𝚐𝚎 𝙿𝚊𝚜𝚜𝚠𝚘𝚛𝚍</a></button>
-        <button type="submit" style="border-radius: 15px;background-color: green;" title="Logout" ><a target="_blank" style="text-decoration: none;text-transform: uppercase;color: white;background-color: green;" href="{% url 'logout' %}" title="Logout">𝙻𝚘𝚐𝚘𝚞𝚝</a></button> 
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Games" ><a target="_blank" style="text-decoration: none;color: white;background-color: green;" href="{% url 'tools_and_games' %}" title="Tools and Games">𝚃𝙾𝙾𝙻𝚂 𝙰𝙽𝙳 𝙶𝙰𝙼𝙴𝚂 𝙿𝙰𝙶𝙴</a></button> 
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Help" ><a target="_blank" style="text-decoration: none;color: white;background-color: green;" href="{% url 'help' %}" title="Help">𝙷𝚎𝚕𝚙</a></button>
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="User Edit" ><a target="_blank" style="text-decoration: none;color: white;background-color: green;" href="{% url 'user_edit' %}" title="User Edit">𝚄𝚜𝚎𝚛 𝙴𝚍𝚒𝚝</a></button>
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Telegram FAQ" ><a target="_blank" style="text-decoration: none;color: white;background-color: green;" href="{% url 'about' %}" title="Telegram FAQ">𝙰𝚋𝚘𝚞𝚝 𝙾𝚞𝚛 𝙲𝚘𝚖𝚖𝚞𝚗𝚒𝚝𝚢</a></button>
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Telegram FAQ" ><a target="_blank" style="text-decoration: none;color: white;background-color: green;" href="{% url 'our_team' %}" title="Our Team">𝙾𝚞𝚛 𝚃𝚎𝚊𝚖</a></button>
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Change Password" ><a target="_blank" style="text-decoration: none;color: white;background-color: green;" href="{% url 'change_password' %}" title="Change Password">𝙲𝚑𝚊𝚗𝚐𝚎 𝙿𝚊𝚜𝚜𝚠𝚘𝚛𝚍</a></button>
+        <button type="submit" style="border-radius: 15px;background-color: green;" title="Logout" ><a target="_blank" style="text-decoration: none;color: white;background-color: green;" href="{% url 'logout' %}" title="Logout">𝙻𝚘𝚐𝚘𝚞𝚝</a></button> 
     </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" title="Close">Close</button>
       </div>
     </div>
   </div>
@@ -305,10 +228,8 @@ body {
     </div>
     {% endif %}
     <div class="convHistory userBg">
-      <!-- CONVERSATION GOES HERE! -->
       {% for j in chat.chat_messages.all %}
         {% if j.user == request.user %}
-
           <div class="msg messageSent">
           <span>{{j.user.username}}</span>  
           <!-- <form action="" method="post">   
@@ -330,7 +251,6 @@ body {
             </span>
           </div>
         {% else %}
-
           <div class="msg messageReceived">
             <span class="user">{{j.user.username}}</span>
             <br><hr>

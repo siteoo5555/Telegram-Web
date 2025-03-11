@@ -1,153 +1,241 @@
 <!DOCTYPE html>
- <html lang="en">
- 
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-     <title>Live Code Editor</title>
-     <link rel="icon" href="https://www.codester.com/static/uploads/items/000/052/52250/icon.png">
-     <style>
-:root {
-    --dark-blue: #14007a;
-    --blue: #1a009c;
-    --light-blue: rgb(74, 225, 255);
-    --pink: rgb(255, 40, 113);
-}
+<html lang="en">
 
-* {
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/panda-syntax.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.min.css">
+    <link rel="icon" href="https://static.thenounproject.com/png/4601528-200.png">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+
+body{
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
-body {
-    height: 100vh;
-    font-family: sans-serif;
-    background-image: linear-gradient(45deg,var(--light-blue), var(--blue));
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.container{
+    font-family: "Source Sans 3", sans-serif;
 }
 
-.code-editor {
-    width: 90vw;
-    height: 90vh;
-
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    background-color: #fff;
-    border-radius: 1rem;
-    overflow: hidden;
-    border: 1px solid var(--dark-blue);
-}
-
-.code {
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    overflow-y: auto;
-
-    background-color: var(--dark-blue);
-    padding: 1rem;
-    border-radius: 0 1rem 1rem 0;
-}
-
-h1 {
-    font: 600 1.2rem sans-serif;
-    margin: 1rem 0;
+.header{
+    background: #000;
     color: #fff;
+    height: 60px;
+    border-bottom: 5px solid #333;
 }
 
-h1 > img {
-    width: 1.3rem;
-    margin-right: 1rem;
-    vertical-align: middle;
+.header .title{
+    padding: 0.5rem;
 }
 
-.code textarea {
-    width: 100%;
-    height: calc(100% - 4rem);
-    background-color: var(--blue);
-    color: var(--light-blue);
-    border: none;
-    padding: 1rem;
-    font-size: 1.1rem;
-    resize: vertical;
+.header .title .main-title{
+    font-size: 18px;
+    font-weight: 600;
 }
 
-.code textarea::-webkit-scrollbar {
-    width: .4rem;
-}
-.code textarea::-webkit-scrollbar-thumb {
-    background-color: var(--pink);
-    border-radius: .4rem;
+.header .title .sub-title{
+    font-size: 14px;
 }
 
-#result {
+.header .title .sub-title span{
+    color: #999;
+}
+
+.editor{
+    width: 33.33%;
+    height: 100%;
+    float: left;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.editor #html{
+    border-right: 1px solid #777;
+}
+
+.editor #css{
+    border-left: 20px solid #333;
+    border-right: 1px solid #777;
+}
+
+.editor #js{
+    border-left: 20px solid #333;
+}
+
+.code-box{
+    position: relative;
+    height: calc(50vh - 4.6rem);
+    border-top: 1px solid #000;
+    border-bottom: 10px solid #333;
+    overflow: hidden;
+}
+
+.preview{
+    position: relative;
+    height: calc(90vh - 30px);
+    background: #fff;
+    border-top: 10px ridge #333;
+}
+
+.preview iframe{
     width: 100%;
     height: 100%;
-    border: none;
 }
 
-a {
-    background-color: lime;
-    color: #fff;
-    padding: 0 1.2rem;
-    border-radius: .5rem;
-    text-decoration: none;
-    font-size: 2rem;
-    float: right;
-    cursor: pointer;
-}
-     </style>
- </head>
- 
- <body>
-     <div class="code-editor">
-         <div class="code">
-             <div class="html-code">
-                 <h1><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSTVjZgtLF2vqZV3Nh6VdLV5HEZ3xOyVCRuw&s" alt="HTML">HTML</h1>
-                 <textarea></textarea>
-             </div>
-             <div class="css-code">
-                 <h1><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/css-icon.png" alt="CSS">CSS</h1>
-                 <textarea></textarea>
-             </div>
-             <div class="js-code">
-                 <h1><img src="https://cdn.pixabay.com/photo/2015/04/23/17/41/javascript-736400_1280.png" alt="JS">JS</h1>
-                 <textarea spellcheck="false"></textarea>
-             </div>
-         </div>
-         <iframe id="result"></iframe>
-     </div>
- <script>
-const html_code = document.querySelector('.html-code textarea');
-const css_code = document.querySelector('.css-code textarea');
-const js_code = document.querySelector('.js-code textarea');
-const result = document.querySelector('#result');
-
-function run() {
-    // Storing data in Local Storage
-    localStorage.setItem('html_code', html_code.value);
-    localStorage.setItem('css_code', css_code.value);
-    localStorage.setItem('js_code', js_code.value);
-
-    // Executing HTML, CSS & JS code
-    result.contentDocument.body.innerHTML = `<style>${localStorage.css_code}</style>` + localStorage.html_code;
-    result.contentWindow.eval(localStorage.js_code);
+::-webkit-scrollbar{
+    width: 5px;
+    height: 5px;
 }
 
-// Checking if user is typing anything in input field
-html_code.onkeyup = () => run();
-css_code.onkeyup = () => run();
-js_code.onkeyup = () => run();
+::-webkit-scrollbar-track{
+    background: transparent;
+}
 
-// Accessing data stored in Local Storage. To make it more advanced you could check if there is any data stored in Local Storage.
-html_code.value = localStorage.html_code;
-css_code.value = localStorage.css_code;
-js_code.value = localStorage.js_code;
- </script>
- </body>
- 
- </html>
+::-webkit-scrollbar-thumb{
+    background: #555;
+    border-radius: 20px;
+}
+</style>
+    <title>Live Code Editor</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="title">
+                <center>
+                <div class="main-title">
+                    Live Code Editor
+                </div>
+            </center>
+            </div>
+        </div>
+
+        <div class="code-box">
+            <div class="editor" id="html"></div>
+            <div class="editor" id="css"></div>
+            <div class="editor" id="js"></div>
+        </div>
+        <div class="preview">
+            <iframe id="live-preview"></iframe>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/closetag.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/xml/xml.min.js"></script>
+<script>
+    // Catching commonly used elements to minimize dom queries
+const livePreviewFrame = document.getElementById('live-preview');
+const htmlEditor = document.getElementById('html');
+const cssEditor = document.getElementById('css');
+const jsEditor = document.getElementById('js');
+
+// Function to set up the live preview iframe and include necessary scripts
+function initializeLivePreview() {
+    livePreviewFrame.contentWindow.document.body.innerHTML = '';
+    const styleElement = document.createElement('style');
+    styleElement.setAttribute('id', 'live-preview-style');
+    livePreviewFrame.contentWindow.document.head.appendChild(styleElement);
+
+    const pagedJsScript = document.createElement('script');
+    pagedJsScript.src = 'https://unpkg.com/pagedjs/dist/paged.legacy.polyfill.js';
+    livePreviewFrame.contentWindow.document.head.appendChild(pagedJsScript);
+}
+
+// Function to update the live preview iframe with the html code from editor
+function updateLiveHTMLPreview(codeEditors) {
+    livePreviewFrame.contentWindow.document.body.innerHTML = codeEditors.html.getValue();
+}
+
+// Function to update the live preview iframe with the css code from editor
+function updateLiveCSSPreview(codeEditors) {
+    const styleElement = livePreviewFrame.contentWindow.document.getElementById('live-preview-style');
+    styleElement.innerHTML = codeEditors.css.getValue();
+}
+
+// Function to update the live preview iframe with the js code from editor
+function updateLiveJSPreview(codeEditors) {
+    const scriptElement = document.createElement('script');
+    scriptElement.innerHTML = codeEditors.js.getValue();
+    livePreviewFrame.contentWindow.document.body.appendChild(scriptElement);
+}
+
+// Function to initialize CodeMirror editors for html, css and javascript
+function initializeCodeEditors() {
+    function getDefaultOptions(object) {
+        const defaultOptions = {
+            lineNumbers: true,
+            autoCloseTags: true,
+            autoCloseBrackets: true,
+            theme: 'panda-syntax'
+        };
+        if (object) {
+            const keys = Object.keys(object);
+            for (const key of keys) {
+                defaultOptions[key] = object[key];
+            }
+        }
+        return defaultOptions;
+    }
+
+    const codeEditors = {
+        html: CodeMirror(htmlEditor, getDefaultOptions({
+            mode: 'text/html',
+            value: '',
+        })),
+        css: CodeMirror(cssEditor, getDefaultOptions({
+            mode: 'css',
+            value: '',
+            extraKeys: { 'Ctrl-Space': 'autocomplete' },
+            hintOptions: {
+                completeSingle: false,
+                closeOnUnfocus: false
+            }
+        })),
+        js: CodeMirror(jsEditor, getDefaultOptions({
+            mode: 'javascript',
+            value: ''
+        })),
+    };
+    return codeEditors;
+}
+
+// Function to set up the live preview studio with CodeMirror editors and event listeners
+function setupLivePreviewStudio() {
+    const codeEditors = initializeCodeEditors();
+
+    // Event listener for changes in HTML editor
+    CodeMirror.on(codeEditors.html, 'change', () => {
+        updateLiveHTMLPreview(codeEditors);
+    });
+
+    // Event listener for changes in CSS editor
+    CodeMirror.on(codeEditors.css, 'change', () => {
+        updateLiveCSSPreview(codeEditors);
+    });
+
+    // Event listener for changes in HTML editor
+    CodeMirror.on(codeEditors.js, 'change', () => {
+        updateLiveJSPreview(codeEditors);
+    });
+}
+
+// Event listener to set up the live preview studio after the dom is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initializeLivePreview();
+    setupLivePreviewStudio();
+});
+</script>
+</body>
+
+</html>

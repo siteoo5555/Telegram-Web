@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Dictionary App</title>
+  <link rel="icon" href="https://cdn2.iconfinder.com/data/icons/rounded_square_icons__books_by_deleket-dexzmr/320/Dictionary.png">
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  min-width: 0;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.result {
+  text-align: left;
+}
+
+#meaning {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .container {
+    padding: 15px 20px;
+  }
+
+  input, button {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  #meaning {
+    font-size: 14px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Dictionary App</h1>
+    <div class="search-box">
+      <input type="text" id="wordInput" placeholder="Enter a word..." />
+      <button id="searchButton">Search</button>
+    </div>
+    <div class="result" id="result"><center>
+      <h2>Word Meaning</h2>
+      <p id="meaning">Type a word to get its meaning.</p></center>
+    </div>
+  </div>
+  <script>
+    document.getElementById('searchButton').addEventListener('click', async () => {
+  const word = document.getElementById('wordInput').value.trim();
+  const resultDiv = document.getElementById('result');
+  const meaningDiv = document.getElementById('meaning');
+
+  if (!word) {
+    meaningDiv.textContent = "Please enter a word.";
+    return;
+  }
+
+  try {
+    const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+    if (!response.ok) {
+      meaningDiv.textContent = "Word not found.";
+      return;
+    }
+
+    const data = await response.json();
+    const meaning = data[0]?.meanings[0]?.definitions[0]?.definition || "Meaning not available.";
+    meaningDiv.textContent = meaning;
+  } catch (error) {
+    meaningDiv.textContent = "Error fetching data.";
+    console.error(error);
+  }
+});
+
+  </script>
+</body>
+</html>
