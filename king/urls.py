@@ -105,5 +105,7 @@ urlpatterns = [
     path('url_shortener_app/',  url_shortener, name='url_shortener'),
     path('image_color_picker/',  image_color_picker, name='image_color_picker'),
     path('wikipedia_searcher/',  wikipedia_searcher, name='wikipedia_searcher'),
+    path('falling_ball_game/',  falling_ball_game, name='falling_ball'),
+    path('pinball_game/',  pinball_game, name='pinball_game'),
     # path('music_application/',  music_app, name='music_app', ),
 ]

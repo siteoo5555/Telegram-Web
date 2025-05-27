@@ -216,6 +216,10 @@ def dino(request):
 def spinner(request):
     ...
     return render(request, 'spin.html')
+    
+def falling_ball_game(request):
+    ...
+    return render(request, 'falling_ball_game.html')
 
 def multiplayer_snake_game(request):
     ...
@@ -225,6 +229,10 @@ def multiplayer_snake_game(request):
 def detect_device_battery(request):
     ...
     return render(request, 'detect_device_battery.html')
+
+def pinball_game(request):
+    ...
+    return render(request, 'pinball_game.html')
 
 
 def flip_coin_game(request):
@@ -340,6 +348,10 @@ def country_guide(request):
     ...
     return render(request, 'country_guide.html')
 
+def speech_to_text(request):
+    ...
+    return render(request, 'speech_to_text.html')
+
 def text_to_speech(request):
     ...
     return render(request, 'text_to_speech.html')
@@ -394,9 +406,7 @@ def memory(request):
     ...
     return render(request, 'memory.html')
 
-def pinball(request):
-    ...
-    return render(request, 'ball.html')
+
 
 def mouse_tap(request):
     ...

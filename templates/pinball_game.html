@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,
+                                   initial-scale=1.0">
+    <title>Pinball Game</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/566/566286.png">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333;
+        }
+
+        #gameCanvas {
+            background-color: black;
+            position: relative;
+            width: 600px;
+            height: 400px;
+        }
+
+        #ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            top: calc(100% - 30px);
+            /* Adjusted initial position */
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #paddle {
+            position: absolute;
+            width: 100px;
+            height: 10px;
+            background-color: white;
+            bottom: 0;
+            left: 250px;
+        }
+
+        #gameOver {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            display: none;
+        }
+
+        #restartBtn {
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+            /* Initially hide restart button */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="gameCanvas">
+        <div id="ball"></div>
+        <div id="paddle"></div>
+    </div>
+    <div id="gameOver">
+        <h2>Game Over!</h2>
+        <button id="restartBtn">Restart</button>
+    </div>
+
+    <script>
+        let ball = document.getElementById("ball");
+        let paddle = document.getElementById("paddle");
+        let gameOver = document.getElementById("gameOver");
+        let restartBtn = document.getElementById("restartBtn");
+        let ballX = 300;
+        let ballY = 370;
+        /* Adjusted initial position */
+        let paddleX = 250;
+        let dx = 3;
+        let dy = 3;
+        let gameActive = true;
+        // Control variable to determine if the game is active or not
+
+        function moveBall() {
+            if (!gameActive) return;
+            // If the game is not active, stop moving the ball
+
+            ballX += dx;
+            ballY += dy;
+
+            if (ballX < 0 || ballX > 580) {
+                dx = -dx;
+            }
+
+            if (ballY < 0 || ballY > 380) {
+                dy = -dy;
+            }
+
+            if (ballY > 380) {
+              // Check if ball touches the lower ground
+                gameOver.style.display = "block";
+              // Display Game Over message
+                restartBtn.style.display = "block";
+              // Display restart button
+                gameActive = false;
+              // Set game active to false
+                return; // Stop the game loop
+            }
+
+            if (ballY > 370 && ballX >= 
+                    paddleX && ballX <= paddleX + 100) {
+                dy = -dy;
+            }
+
+            ball.style.left = ballX + "px";
+            ball.style.top = ballY + "px";
+        }
+
+        document.addEventListener("keydown", function (event) {
+            if (!gameActive) return;
+            // If the game is not
+            // active, don't move the paddle
+
+            if (event.key === "ArrowLeft") {
+                paddleX -= 10;
+                if (paddleX < 0) {
+                    paddleX = 0;
+                }
+                paddle.style.left = paddleX + "px";
+            } else if (event.key === "ArrowRight") {
+                paddleX += 10;
+                if (paddleX > 500) {
+                    paddleX = 500;
+                }
+                paddle.style.left = paddleX + "px";
+            }
+        });
+
+        restartBtn.addEventListener("click", function () {
+            gameOver.style.display = "none"; 
+          // Hide the Game Over message
+            restartBtn.style.display = "none";
+          // Hide restart button
+            ballX = 300; // Reset ball position
+            ballY = 370; // Reset ball position
+            dx = 3; // Reset ball movement speed
+            dy = 3; // Reset ball movement speed
+            paddleX = 250;
+          // Reset paddle position to the middle of the screen
+            paddle.style.left = paddleX + "px";
+          // Update paddle position
+            gameActive = true; // Set game active to true
+        });
+
+        function gameLoop() {
+            moveBall();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+
+</html>
